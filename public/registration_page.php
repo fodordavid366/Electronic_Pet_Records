@@ -37,7 +37,8 @@
     <label for="">Születési dátum</label>
     <input type="date" id="" name="">
 
-<!--    Buttojn-->
+
+<!--    Button-->
     <button type="submit">Regisztráció</button>
     <button type="reset">Törlés</button>
 </form>
