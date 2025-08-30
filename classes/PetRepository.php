@@ -12,11 +12,10 @@ class PetRepository
         $this->pdo = $pdo;
     }
 
-    /* Create new pet and return its id */
     public function create(Pet $pet, int $owner_id): int|string
     {
         if ($this->existsPet($pet, $owner_id)) {
-            return("Ez a házikedvenc már létezik.");
+            return "Ez a házikedvenc már létezik.";
         }
 
         $stmt = $this->pdo->prepare(
@@ -31,15 +30,21 @@ class PetRepository
             $pet->birthDate,
             $pet->vetId
         ]);
-        return (int)$this->pdo->lastInsertId();
+        $newId = (int)$this->pdo->lastInsertId();
+
+        $link = $this->pdo->prepare("INSERT INTO owner_pet (owner_id, pet_id) VALUES (?, ?)");
+        $link->execute([$owner_id, $newId]);
+
+        return $newId;
     }
+
     public function existsPet(Pet $pet, int $ownerId): bool
     {
         $stmt = $this->pdo->prepare(
             "SELECT COUNT(*) FROM owner_pet op
-JOIN pet p ON op.pet_id = p.pet_id
-WHERE p.name = ? AND p.species = ? AND p.breed = ? AND p.gender = ? AND p.birth_date = ?
-  AND op.owner_id = ?"
+             JOIN pet p ON op.pet_id = p.pet_id
+             WHERE p.name = ? AND p.species = ? AND p.breed = ? AND p.gender = ? AND p.birth_date = ?
+               AND op.owner_id = ?"
         );
         $stmt->execute([
             $pet->name,
@@ -51,52 +56,59 @@ WHERE p.name = ? AND p.species = ? AND p.breed = ? AND p.gender = ? AND p.birth_
         ]);
         return $stmt->fetchColumn() > 0;
     }
-    /* Fetch single pet by id */
+
     public function find(int $id): ?Pet
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM pet WHERE pet_id = ?");
+        $stmt = $this->pdo->prepare(
+            "SELECT p.*, op.owner_id FROM pet p
+             LEFT JOIN owner_pet op ON op.pet_id = p.pet_id
+             WHERE p.pet_id = ?"
+        );
         $stmt->execute([$id]);
         $row = $stmt->fetch();
-        return $row ? new Pet(array_merge($row, ['id' => $row['pet_id']])) : null;
+        return $row ? new Pet($row) : null;
     }
 
-    /* Fetch pets visible for an owner */
     public function findByOwner(int $ownerId): array
     {
         $stmt = $this->pdo->prepare(
-            "SELECT p.* FROM pet p
+            "SELECT p.*, op.owner_id FROM pet p
              JOIN owner_pet op ON op.pet_id = p.pet_id
              WHERE op.owner_id = ?"
         );
         $stmt->execute([$ownerId]);
         return array_map(
-            fn($row) => new Pet(array_merge($row, ['id' => $row['pet_id']])),
+            fn($row) => new Pet($row),
             $stmt->fetchAll()
         );
     }
 
-    /* Fetch pets assigned to a vet */
     public function findByVet(int $vetId): array
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM pet WHERE vet_id = ?");
+        $stmt = $this->pdo->prepare(
+            "SELECT p.*, op.owner_id FROM pet p
+             LEFT JOIN owner_pet op ON op.pet_id = p.pet_id
+             WHERE p.vet_id = ?"
+        );
         $stmt->execute([$vetId]);
         return array_map(
-            fn($row) => new Pet(array_merge($row, ['id' => $row['pet_id']])),
+            fn($row) => new Pet($row),
             $stmt->fetchAll()
         );
     }
 
-    /* Fetch all pets (admin) */
     public function findAll(): array
     {
-        $rows = $this->pdo->query("SELECT * FROM pet")->fetchAll();
+        $rows = $this->pdo->query(
+            "SELECT p.*, op.owner_id FROM pet p
+             LEFT JOIN owner_pet op ON op.pet_id = p.pet_id"
+        )->fetchAll();
         return array_map(
-            fn($row) => new Pet(array_merge($row, ['id' => $row['pet_id']])),
+            fn($row) => new Pet($row),
             $rows
         );
     }
 
-    /* Update existing pet */
     public function update(Pet $pet): void
     {
         $stmt = $this->pdo->prepare(
@@ -115,7 +127,6 @@ WHERE p.name = ? AND p.species = ? AND p.breed = ? AND p.gender = ? AND p.birth_
         ]);
     }
 
-    /* Delete pet */
     public function delete(int $id): void
     {
         $stmt = $this->pdo->prepare("DELETE FROM pet WHERE pet_id = ?");

@@ -3,13 +3,14 @@ namespace App;
 
 class Pet
 {
-    public ?int $id        = null;
+    public ?int $id = null;
     public string $name;
     public string $species;
     public string $breed;
     public string $gender;
     public string $birthDate;
     public int $vetId;
+    public ?int $ownerId = null;
 
     public function __construct(array $data)
     {
@@ -19,12 +20,15 @@ class Pet
         $this->gender     = $data['gender'];
         $this->birthDate  = $data['birth_date'];
         $this->vetId      = (int)$data['vet_id'];
+        $this->ownerId    = isset($data['owner_id']) ? (int)$data['owner_id'] : null;
+
         if (isset($data['id'])) {
             $this->id = (int)$data['id'];
+        } elseif (isset($data['pet_id'])) {
+            $this->id = (int)$data['pet_id'];
         }
     }
 
-    // Converts object to associative array for JSON responses
     public function toArray(): array
     {
         return [
@@ -35,6 +39,7 @@ class Pet
             'gender'     => $this->gender,
             'birth_date' => $this->birthDate,
             'vet_id'     => $this->vetId,
+            'owner_id'   => $this->ownerId,
         ];
     }
 }
