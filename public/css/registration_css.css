@@ -1,0 +1,13 @@
+.register-container {
+    min-height: 100vh;
+}
+.register-image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+@media (max-width: 768px) {
+    .register-image {
+        height: 300px;
+    }
+}
