@@ -2,33 +2,54 @@
 require_once __DIR__ . '/../core/init.php';
 require_once __DIR__ . '/../includes/auth.php';
 
-// Parse JSON input
-$data = json_decode(file_get_contents('php://input'), true);
-if (!isset($data['email'], $data['password'])) {
-    sendJSON(['message' => 'E‑mail és jelszó kötelező'], 400);
-}
+// Mindig JSON válasz
+header('Content-Type: application/json; charset=utf-8');
 
-$email = trim($data['email']);
-$password = $data['password'];
+try {
+    $data = json_decode(file_get_contents('php://input'), true);
 
-// Check user
-$stmt = $pdo->prepare("SELECT * FROM owner WHERE email = ?");
-$stmt->execute([$email]);
-$user = $stmt->fetch();
-if (!$user || !password_verify($password, $user['password'])) {
-    sendJSON(['message' => 'Hibás bejelentkezési adatok'], 401);
-}
-if ($user['verified']===0) {
-    sendJSON(['message' => 'A fiók nincs aktiválva'], 401);
-}
-if ($user['is_banned']===1) {
-    sendJSON(['message' => 'A fiókot letiltották'], 401);
-}
+    if (!isset($data['email'], $data['password'])) {
+        sendJSON(['message' => 'E-mail és jelszó kötelező'], 400);
+    }
 
-// Issue JWT
-$token = issueToken($user['owner_id'], 'owner');
+    $email = trim($data['email']);
+    $password = $data['password'];
 
-sendJSON([
-    'message' => 'Sikeres bejelentkezés',
-    'token'   => $token
-], 200);
+    if (strlen($email) > 60) {
+        sendJSON(['message' => 'Érvénytelen e-mail cím'], 400);
+    }
+    if (strlen($password) < 6) {
+        sendJSON(['message' => 'A jelszó túl rövid'], 400);
+    }
+
+    $stmt = $pdo->prepare("SELECT * FROM owner WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
+
+    if (!$user || !password_verify($password, $user['password'])) {
+        sendJSON(['message' => 'Hibás bejelentkezési adatok'], 401);
+    }
+
+    if ((int)$user['verified'] === 0) {
+        sendJSON(['message' => 'A fiók nincs aktiválva'], 403);
+    }
+
+    if ((int)$user['is_banned'] === 1) {
+        sendJSON(['message' => 'A fiókot letiltották'], 403);
+    }
+
+    // JWT kiadása
+    $token = issueToken($user['owner_id'], 'owner');
+
+    sendJSON([
+        'message' => 'Sikeres bejelentkezés',
+        'token'   => $token
+    ], 200);
+
+} catch (PDOException $e) {
+    error_log("DB error: " . $e->getMessage());
+    sendJSON(['message' => 'Adatbázis hiba'], 500);
+} catch (Exception $e) {
+    error_log("General error: " . $e->getMessage());
+    sendJSON(['message' => 'Váratlan hiba'], 500);
+}

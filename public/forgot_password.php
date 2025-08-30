@@ -30,23 +30,23 @@
                 <h4 class="mt-2 mb-0">Weboldal Neve</h4>
             </div>
 
-               <form class="custom-form member-login-form" action="#" method="post" role="form">
+            <form class="custom-form member-login-form" id="forgotPasswordForm" action="#" method="post" role="form">
 
-
-                    <!--    Email-->
-                   <div class="mb-4">
-                <label class="form-label mb-2" for="member-login-number">Email</label>
-                <input type="text" name="member-login-number" id="member-login-number"
-                       class="form-control" placeholder="Email" required>
+                <!--    Email-->
+                <div class="mb-4">
+                    <label class="form-label mb-2" for="member-login-number">Email</label>
+                    <input type="email" name="member-login-number" id="member-login-number"
+                           class="form-control" placeholder="Email" required maxlength="60">
                 </div>
 
+                <!--   New Password Button-->
+                <button type="button" class="btn btn-primary w-100 mb-4" id="requestNewPasswordBtn">Új jelszó kérése</button>
 
-                    <!--   New Password Button-->
-                    <button type="button" class="btn btn-outline-secondary w-100 mb-4">Új jelszó kérése</button>
+                <!--   Login-->
+                <a href="login.php" class="btn btn-outline-secondary w-100 mb-3">Bejelentkezés</a>
 
-<!--                   Login-->
-                   <button type="submit" class="btn btn-primary w-100 mb-3">Bejelentkezés</button>
-                </form>
+                <div id="alertBox" class="alert d-none mt-3"></div>
+            </form>
             </div>
         </div>
 
@@ -58,7 +58,7 @@
         </path>
     </svg>
 </div>
-
+    <script src="javascript/password_request.js"></script>
 </body>
 </html>
 

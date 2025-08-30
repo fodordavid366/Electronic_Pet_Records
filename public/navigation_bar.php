@@ -54,10 +54,21 @@
                 <li class="nav-item">
                     <a class="btn custom-btn custom-border-btn btn rounded-pill ms-lg-3 mt-2 mt-lg-0"
                        data-bs-toggle="offcanvas"
-                       href="#offcanvasExample"
+                       href="login.php"
                        role="button"
                        aria-controls="offcanvasExample">
                         Bejelentkezés
+                    </a>
+                    <a href="login.php">asdasd</a>
+                    <a href="logout.php">asdasd</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn custom-btn custom-border-btn btn rounded-pill ms-lg-3 mt-2 mt-lg-0"
+                       data-bs-toggle="offcanvas"
+                       href="logout.php"
+                       role="button"
+                       aria-controls="offcanvasExample">
+                        Kijelentkezés
                     </a>
                 </li>
             </ul>

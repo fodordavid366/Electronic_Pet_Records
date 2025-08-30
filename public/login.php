@@ -24,18 +24,18 @@
     <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%; z-index: 1">
         <h5 class="text-center mb-4">Bejelentkezés</h5>
 
-        <form class="custom-form member-login-form" action="#" method="post" role="form">
+        <form id="loginForm" class="custom-form member-login-form" action="#" method="post" role="form">
 
             <div class="mb-4">
                 <label class="form-label mb-2" for="member-login-number">Email</label>
-                <input type="text" name="member-login-number" id="member-login-number"
-                       class="form-control" placeholder="Email" required>
+                <input type="email" name="member-login-number" id="member-login-number"
+                       maxlength="60" class="form-control" placeholder="Email" required>
             </div>
 
             <div class="mb-4">
                 <label class="form-label mb-2" for="member-login-password">Jelszó</label>
                 <input type="password" name="member-login-password" id="member-login-password"
-                       pattern="[0-9a-zA-Z]{4,10}" class="form-control" placeholder="Jelszó" required>
+                       class="form-control" placeholder="Jelszó" required>
             </div>
 
             <div class="form-check mb-4">
@@ -46,10 +46,12 @@
             <button type="submit" class="btn btn-primary w-100 mb-3">Bejelentkezés</button>
 
             <div class="text-center my-2">
-                <a href="#">Elfelejtetted a jelszavad?</a>
+                <a href="forgot_password.php">Elfelejtetted a jelszavad?</a>
             </div>
 
-            <button type="button" class="btn btn-outline-secondary w-100">Regisztráció</button>
+            <a href="registration_page.php" class="btn btn-outline-secondary w-100">Regisztráció</a>
+
+            <div id="loginAlert" class="alert alert-danger mt-3 d-none"></div>
         </form>
 
         <div class="mt-4 text-center">
@@ -71,6 +73,7 @@
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="javascript/js.js"></script>
+<script src="javascript/login.js"></script>
 
 </body>
 </html>

@@ -6,6 +6,8 @@ use PHPMailer\PHPMailer\Exception;
 function sendMail(string $to, string $subject, string $html): bool
 {
     $mail = new PHPMailer(true);
+    $mail->CharSet = 'UTF-8';
+
 
     try {
         $mail->isSMTP();
