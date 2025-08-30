@@ -122,7 +122,7 @@ h1{
 /*SECTION 2*/
 #section2 {
     position: relative;
-    height: 100vh;
+    height: 75vh;
     background: linear-gradient(180deg,rgba(110, 183, 159, 1) 0%, rgba(84, 140, 120, 1) 50%, rgba(65, 106, 92, 1) 100%);
     overflow: hidden;
 }
@@ -133,64 +133,66 @@ h1{
     z-index: 1;
 }
 
-.circle-buttons {
+/*BUTTONS*/
+.side-buttons {
     position: absolute;
-    width: 150px;
-    height: 300px;
     top: 50%;
+    width: 100px;
+    height: 200px;
     transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
-
 .left-buttons {
     left: 0;
 }
-
 .right-buttons {
     right: 0;
 }
-
-.circle-buttons a {
+.side-buttons button {
     position: absolute;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 60px;
-    font-weight: bold;
+    width: 90px;
+    height: 90px;
+    border-radius: 90px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
 }
 
-/* Félkör elrendezés - bal oldal */
-.left-buttons a:nth-child(1) {
-    top: 10%;
-    left: 40%;
+/* Félkör elhelyezés 3 gombra: 0°, 45°, 90° például */
+
+/* Bal oldalon: félkör ív felfelé */
+.left-buttons button:nth-child(1) {
+    top: 30%;
+    left: 100%;
+    transform: translate(150%, -50%) rotate(0deg) translate(80px) rotate(0deg);
 }
-.left-buttons a:nth-child(2) {
-    top: 40%;
-    left: 10%;
+.left-buttons button:nth-child(2) {
+    top: 50%;
+    left: 100%;
+    transform: translate(120%, -40%) rotate(45deg) translate(80px) rotate(-45deg);
 }
-.left-buttons a:nth-child(3) {
-    bottom: 10%;
-    left: 40%;
+.left-buttons button:nth-child(3) {
+    top: 70%;
+    left: 100%;
+    transform: translate(250%, 9%) rotate(90deg) translate(80px) rotate(-90deg);
 }
 
-/* Félkör elrendezés - jobb oldal */
-.right-buttons a:nth-child(1) {
-    top: 10%;
-    right: 60%;
+/* Jobb oldalon: félkör ív lefelé */
+.right-buttons button:nth-child(1) {
+    top: 0;
+    left: 50%;
+    transform: translate(-290%, 15%) rotate(180deg) translate(80px) rotate(-180deg);
 }
-.right-buttons a:nth-child(2) {
-    top: 40%;
-    right: 10%;
+.right-buttons button:nth-child(2) {
+    top: 0;
+    left: 50%;
+    transform: translate(-240%, 60%) rotate(135deg) translate(80px) rotate(-135deg);
 }
-.right-buttons a:nth-child(3) {
-    bottom: 10%;
-    right: 40%;
+.right-buttons button:nth-child(3) {
+    top: 0;
+    left: 50%;
+    transform: translate(-380%, 165%) rotate(90deg) translate(80px) rotate(-90deg);
 }
-
 
 /*FOOTER*/
 
@@ -317,4 +319,9 @@ h1{
 
 .events-section{
     background: #e8cda9;
+}
+
+.navbar-brand-image {
+    width: 48px;
+    height: 48px;
 }
