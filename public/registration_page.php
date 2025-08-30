@@ -34,58 +34,60 @@
             <div class="w-100" style="max-width: 400px;">
                 <h2 class="mb-4 text-center p-5">Regisztráció</h2>
 
-<form id="" action="" method="">
+                <form id="registerForm" action="#" method="post">
 
-<!--        Last Name-->
-    <div class="mb-3">
-    <label for="" class="form-label">Vezetéknév</label>
-    <input type="text" id="" name="" class="form-control" required>
-    </div>
+                    <!-- Last Name -->
+                    <div class="mb-3">
+                        <label for="lastname" class="form-label">Vezetéknév</label>
+                        <input type="text" id="lastname" name="lastname" class="form-control" required>
+                    </div>
 
-<!--    First Name-->
-    <div class="mb-3">
-    <label for="" class="form-label">Keresztnév</label>
-    <input type="text" id="" name="" class="form-control">
-    </div>
+                    <!-- First Name -->
+                    <div class="mb-3">
+                        <label for="firstname" class="form-label">Keresztnév</label>
+                        <input type="text" id="firstname" name="firstname" class="form-control" required>
+                    </div>
 
-<!--    Email-->
-    <div class="mb-3">
-    <label for="" class="form-label">Email</label>
-    <input type="email" id="" name="" class="form-control">
-    </div>
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
 
-<!--    Password-->
-    <div class="mb-3">
-    <label for="" class="form-label">Jelszó</label>
-    <input type="password" id="" name="" class="form-control">
-    </div>
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Jelszó</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
 
-<!--    Password Confirm-->
-    <div class="mb-3">
-    <label for="" class="form-label">Jelszó megerősítés</label>
-    <input type="password" id="" name="" class="form-control">
-    </div>
+                    <!-- Password Confirm -->
+                    <div class="mb-3">
+                        <label for="password_verify" class="form-label">Jelszó megerősítés</label>
+                        <input type="password" id="password_verify" name="password_verify" class="form-control" required>
+                    </div>
 
-<!--    Phone number-->
-    <div class="mb-3">
-    <label for="" class="form-label">Telefonszám</label>
-    <input type="text" id="" name="" class="form-control">
-    </div>
+                    <!-- Phone number -->
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Telefonszám</label>
+                        <input type="text" id="phone" name="phone" class="form-control" required>
+                    </div>
 
-<!--    Birthday-->
-    <div class="mb-3">
-    <label for="">Születési dátum</label>
-    <input type="date" id="" name="">
-    </div>
+                    <!-- Birthday -->
+                    <div class="mb-3">
+                        <label for="birth_date" class="form-label">Születési dátum</label>
+                        <input type="date" id="birth_date" name="birth_date" class="form-control" required>
+                    </div>
 
+                    <!-- Buttons -->
+                    <button type="submit" class="btn btn-primary w-100 mb-2">Regisztráció</button>
+                    <button type="reset" class="btn btn-secondary w-100">Törlés</button>
 
-<!--    Button-->
-    <button type="submit" class="btn btn-primary w-100">Regisztráció</button>
-    <button type="reset" class="btn btn-primary w-100">Törlés</button>
-</form>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+<script src="javascript/register.js"></script>
 </body>
 </html><?php

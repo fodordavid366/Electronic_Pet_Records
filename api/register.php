@@ -139,7 +139,7 @@ try {
 }
 
 // Create activation link
-$activationLink = $_ENV['BASE_URL'] . '/activate.php?token=' . $registrationToken;
+$activationLink = $_ENV['BASE_URL'] . '/public/activate.php?token=' . $registrationToken;
 
 // Send activation email
 $body = "<h3>Aktiváld a fiókodat</h3><a href='$activationLink'>Kattints ide!</a>";

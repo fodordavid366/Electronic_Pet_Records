@@ -2,9 +2,7 @@
 require_once __DIR__ . '/../core/init.php';
 
 
-// Read JSON input data
 $data = json_decode(file_get_contents('php://input'), true);
-// Check if all required fields are set
 if (
     !isset($data['token'])
 ) {
@@ -29,7 +27,7 @@ try {
     $updateStmt->execute([$user['owner_id']]);
 
     // Successful activation
-    sendJSON(['message' => 'Fiók aktiválva! Most már <a href="../public/index.php">bejelentkezhet.</a>'], 200);
+    sendJSON(['message' => 'Fiók aktiválva! Most már <a href="../public/login.php">bejelentkezhet.</a>'], 200);
 } catch (Exception $e) {
     error_log('Hiba az aktiválás során: ' . $e->getMessage());
     // Internal server error
