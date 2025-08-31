@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const select = document.getElementById("pets");
     const form = document.getElementById("registerForm");
+    const deleteButton = document.getElementById("deletePet");
 
     const nameInput = document.getElementById("name");
     const genderInput = document.getElementById("gender");
@@ -38,14 +39,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         pets = await res.json();
 
-        // Select feltöltése
         select.innerHTML = `<option value="new">Új kisállat hozzáadása</option>`;
         pets.forEach(p => {
             const opt = document.createElement("option");
-            opt.value = p.pet_id; // itt a fontos változtatás
+            opt.value = p.pet_id;
             opt.textContent = p.name;
             select.appendChild(opt);
         });
+
+        updateDeleteButton();
     }
 
     async function loadVets(selectedVetId = 0) {
@@ -54,15 +56,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (!res.ok) throw new Error("Hiba az orvosok lekérésekor");
 
             const vets = await res.json();
-            doctorSelect.innerHTML = ''; // előző törlése
+            doctorSelect.innerHTML = '';
 
-            // Alap opció
             const defaultOption = document.createElement("option");
             defaultOption.value = 0;
             defaultOption.textContent = "Válasszon doktort";
             doctorSelect.appendChild(defaultOption);
 
-            // Orvosok feltöltése
             vets.forEach(vet => {
                 const opt = document.createElement("option");
                 opt.value = vet.vet_id;
@@ -76,13 +76,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    function updateDeleteButton() {
+        deleteButton.style.display = currentPetId ? "block" : "none";
+    }
 
-    // Állat kiválasztás → form kitöltése
     select.addEventListener("change", async () => {
         if (select.value === "new") {
             currentPetId = null;
             form.reset();
-            await loadVets(); // új kisállat → alap opció
+            await loadVets();
         } else {
             const pet = pets.find(p => String(p.pet_id) === select.value);
             if (pet) {
@@ -95,10 +97,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 await loadVets(pet.vet_id);
             }
         }
+        updateDeleteButton();
     });
 
-
-    // Mentés
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -108,14 +109,21 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
+        // Validáció
+        if (!nameInput.value.trim() || !genderInput.value || !birthInput.value ||
+            !speciesInput.value.trim() || !breedInput.value.trim() || doctorSelect.value === "0") {
+            alert("Minden mező kitöltése kötelező, és válasszon doktort!");
+            return;
+        }
+
         const payload = {
             pet_id: currentPetId,
-            name: nameInput.value,
+            name: nameInput.value.trim(),
             gender: genderInput.value,
             birth_date: birthInput.value,
-            species: speciesInput.value,
-            breed: breedInput.value,
-            vet_id: doctorSelect.value // vet_id
+            species: speciesInput.value.trim(),
+            breed: breedInput.value.trim(),
+            vet_id: doctorSelect.value
         };
 
         const url = "../api/pets.php";
@@ -135,8 +143,38 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (res.ok) {
             await loadPets();
-            if (method === "POST") select.value = "new";
-            else select.value = currentPetId;
+            if (method === "POST" && data.pet_id) {
+                // új pet → állítsuk be currentPetId-t és maradjon a formban az adat
+                currentPetId = data.pet_id;
+                select.value = data.pet_id;
+            } else {
+                select.value = currentPetId;
+            }
+            updateDeleteButton();
+        }
+    });
+
+    deleteButton.addEventListener("click", async () => {
+        if (!currentPetId) return;
+        if (!confirm("Biztosan törölni szeretnéd ezt a kisállatot?")) return;
+
+        const token = getToken();
+        const res = await fetch(`../api/pets.php?pet_id=${currentPetId}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const data = await res.json().catch(() => ({}));
+        alert(data.message || "Ismeretlen hiba");
+
+        if (res.ok) {
+            await loadPets();
+            select.value = "new";
+            form.reset();
+            currentPetId = null;
+            updateDeleteButton();
         }
     });
 

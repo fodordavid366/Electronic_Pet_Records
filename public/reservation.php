@@ -93,42 +93,37 @@
     </div>
 <div class="bg-body py-4 my-4"></div>
 
-<!-- Booking Section -->
-<div class="booking text-center">
-    <div class="container">
-        <h2>Foglalás</h2>
-        <div class="row g-3 justify-content-center">
-            <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Patient Name">
-            </div>
-            <div class="col-md-3">
-                <select name="cars" id="cars" class="form-control">
-                    <option disabled="disabled" selected="selected">Válassza ki kedvencét</option>
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="opel">Opel</option>
-                    <option value="audi">Audi</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <input type="date" id="birth_date" name="birth_date" class="form-control" required>
-            </div>
-            <div class="col-md-2">
-                <select class="form-select">
-                    <option selected>Choose Specialist</option>
-                    <option>Orthopedist</option>
-                    <option>Neurologist</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">Időpontok keresése</button>
-            </div>
+    <div class="booking text-center">
+        <div class="container">
+            <h2>Foglalás</h2>
+            <form id="reservationForm" class="row g-3 justify-content-center">
+                <div class="col-md-3">
+                    <select id="petSelect" class="form-control" required>
+                        <option value="0" disabled selected>Válassza ki kedvencét</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="date" id="dateInput" class="form-control" required />
+                </div>
+                <div class="col-md-3">
+                    <select id="treatmentSelect" class="form-control" required>
+                        <option value="0" disabled selected>Válasszon kezelést</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" id="generateSlotsBtn" class="btn btn-secondary w-100">Időpontok generálása</button>
+                </div>
+                <div id="slotsContainer" class="mb-3"></div>
+                <div class="col-md-2">
+                    <button type="button" id="bookSlotBtn" class="btn btn-success w-100">Időpont foglalása</button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
-</form>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="javascript/reservation.js"></script>
 </body>
 </html>

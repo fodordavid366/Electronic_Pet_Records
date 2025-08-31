@@ -70,15 +70,12 @@
                     <div class="mb-3">
                         <label for="doctor" class="form-label">Válasszon doktort</label>
                         <select id="doctor" name="doctor" class="form-control">
-                            <option value="0">Válassz doktort</option>
-                            <option value="1">Dr. Volvo</option>
-                            <option value="2">Dr. Saab</option>
-                            <option value="3">Dr. Fiat</option>
                         </select>
                     </div>
 
                     <!-- Buttons -->
                     <button type="submit" class="btn btn-primary w-100 mb-2">Mentés</button>
+                    <button type="button" id="deletePet" class="btn btn-danger w-100 mb-2" style="display:none;">Törlés</button>
                     <button type="reset" class="btn btn-secondary w-100">Visszaállítás</button>
 
                 </form>
