@@ -96,12 +96,17 @@ switch ($method) {
             $stmt->execute([$user['sub']]);
             $appointments = $stmt->fetchAll();
         } else { // owner
-            $stmt = $pdo->prepare("
-                SELECT a.* FROM appointment a
-                JOIN pet p ON a.pet_id = p.pet_id
-                JOIN owner_pet op ON p.pet_id = op.pet_id
-                WHERE op.owner_id = ?
-            ");
+            $stmt = $pdo->prepare("SELECT a.appointment_id, a.pet_id, a.vet_id, a.description, a.starts_at, a.ends_at, a.treatment_id, a.status,
+       p.name AS pet_name,
+       CONCAT(v.first_name, ' ', v.last_name) AS vet_name,
+       t.name AS treatment_name
+FROM appointment a
+JOIN pet p ON a.pet_id = p.pet_id
+JOIN vet v ON a.vet_id = v.vet_id
+JOIN treatment t ON a.treatment_id = t.treatment_id
+JOIN owner_pet op ON p.pet_id = op.pet_id
+WHERE op.owner_id = ?
+");
             $stmt->execute([$user['sub']]);
             $appointments = $stmt->fetchAll();
         }
@@ -213,11 +218,11 @@ switch ($method) {
        DELETE: delete appointment
     -------------------------------- */
     case 'DELETE':
-        parse_str(file_get_contents("php://input"), $data);
+        $data = json_decode(file_get_contents("php://input"), true);
         $appointmentId = (int)($data['appointment_id'] ?? 0);
 
         if (!$appointmentId) {
-            sendJSON(['message' => 'Hiányzó appointment_id'], 400);
+            sendJSON(['message' => 'Hiányzó foglalás'], 400);
         }
 
         $stmt = $pdo->prepare("SELECT * FROM appointment WHERE appointment_id = ?");
