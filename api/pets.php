@@ -21,7 +21,7 @@ switch ($method) {
         if ($id) {
             $pet = $repo->find((int)$id);
             if (!$pet || !canAccess($user, $pet)) {
-                sendJSON(['message' => 'A keresett házikedvenc nem található.'], 404);
+                sendJSON(['message' => 'A keresett házikedvenc nem található vagy nincs jogosultság.'], 404);
             }
             sendJSON($pet->toArray());
         } else {
@@ -38,7 +38,19 @@ switch ($method) {
         if ($user['role'] !== 'owner' && $user['role'] !== 'admin') {
             sendJSON(['message' => 'Nincs jogosultság új házikedvenc létrehozásához.'], 403);
         }
+
         $data = json_decode(file_get_contents('php://input'), true);
+        if (!is_array($data)) {
+            sendJSON(['message' => 'Érvénytelen JSON adatok.'], 400);
+        }
+
+        $required = ['name', 'gender', 'birth_date', 'species', 'breed', 'vet_id'];
+        foreach ($required as $field) {
+            if (empty($data[$field])) {
+                sendJSON(['message' => "Hiányzó adat"], 400);
+            }
+        }
+
         $pet  = new Pet($data);
         $newId = $repo->create($pet, $user['sub']);
 
@@ -51,28 +63,44 @@ switch ($method) {
 
     case 'PUT':
         $put = json_decode(file_get_contents('php://input'), true);
-        if (empty($put['id'])) {
+        if (!is_array($put)) {
+            sendJSON(['message' => 'Érvénytelen JSON adatok.'], 400);
+        }
+
+        if (empty($put['pet_id'])) {
             sendJSON(['message' => 'Hiányzik az azonosító.'], 400);
         }
 
-        $existing = $repo->find((int)$put['id']);
+        $existing = $repo->find((int)$put['pet_id']);
         if (!$existing || !canAccess($user, $existing)) {
             sendJSON(['message' => 'Nincs jogosultság a szerkesztéshez.'], 403);
         }
 
-        $updated = new Pet(array_merge($existing->toArray(), $put, ['id' => $existing->id]));
+        $required = ['name', 'gender', 'birth_date', 'species', 'breed', 'vet_id'];
+        foreach ($required as $field) {
+            if (empty($put[$field])) {
+                sendJSON(['message' => "Hiányzó adat"], 400);
+            }
+        }
+
+        $updated = new Pet(array_merge($existing->toArray(), $put, ['pet_id' => $existing->id]));
         $repo->update($updated);
+
         sendJSON(['message' => 'Házikedvenc sikeresen frissítve.']);
         break;
 
     case 'DELETE':
-        parse_str(file_get_contents('php://input'), $del);
-        if (empty($del['id'])) sendJSON(['message' => 'Hiányzik az azonosító.'], 400);
+        $petId = $_GET['pet_id'] ?? null;
 
-        $existing = $repo->find((int)$del['id']);
+        if (!$petId) {
+            sendJSON(['message' => 'Hiányzik az azonosító.'], 400);
+        }
+
+        $existing = $repo->find((int)$petId);
         if (!$existing || !canAccess($user, $existing)) {
             sendJSON(['message' => 'Nincs jogosultság a törléshez.'], 403);
         }
+
         $repo->delete($existing->id);
         sendJSON(['message' => 'Házikedvenc sikeresen törölve.']);
         break;

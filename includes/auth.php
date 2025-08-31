@@ -9,7 +9,7 @@ function issueToken(int $userId, string $role): string
         'iss'  => $_ENV['BASE_URL'], // issuer
         'sub'  => $userId,           // subject = user id
         'role' => $role,
-        'exp'  => time() + 3600
+        'exp'  => time() + 7200
     ];
     return JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
 }
