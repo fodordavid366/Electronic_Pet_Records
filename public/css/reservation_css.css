@@ -1,0 +1,102 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Hero Section */
+.hero {
+    background-color: #fff;
+    padding: 60px 0;
+}
+
+.hero h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+
+.hero .btn-primary {
+    background-color: #fcd703;
+    border: none;
+    color: #000;
+    font-weight: 600;
+}
+
+.hero img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Specialities */
+.specialities {
+    padding: 50px 0;
+    background-color: #f8f9fa;
+}
+
+.specialities h2 {
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.speciality-card {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background: #fff;
+    cursor: pointer;
+}
+
+.speciality-card.active {
+    border: 2px solid #fcd703;
+    background-color: #fffbe6;
+}
+
+.speciality-card img {
+    width: 70px;
+    margin-bottom: 15px;
+}
+
+/* Booking */
+.booking {
+    padding: 60px 0;
+    background-color: #fff;
+}
+
+.booking h2 {
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.form-control, .form-select {
+    border-radius: 10px;
+}
+
+.speciality-card {
+    display: block;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background: #fff;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.speciality-card:hover {
+    border-color: #ddd;
+}
+
+/* amikor a radio be van jelölve */
+.speciality-card input:checked ~ img,
+.speciality-card input:checked ~ p {
+    filter: none;
+}
+
+.speciality-card input:checked ~ p {
+    font-weight: bold;
+    color: #000;
+}
+
+.speciality-card:has(input:checked) {
+    border: 2px solid #fcd703;
+    background-color: #fffbe6;
+}
