@@ -51,16 +51,16 @@ switch ($method) {
 
     case 'PUT':
         $put = json_decode(file_get_contents('php://input'), true);
-        if (empty($put['id'])) {
+        if (empty($put['pet_id'])) {
             sendJSON(['message' => 'Hiányzik az azonosító.'], 400);
         }
 
-        $existing = $repo->find((int)$put['id']);
+        $existing = $repo->find((int)$put['pet_id']);
         if (!$existing || !canAccess($user, $existing)) {
             sendJSON(['message' => 'Nincs jogosultság a szerkesztéshez.'], 403);
         }
 
-        $updated = new Pet(array_merge($existing->toArray(), $put, ['id' => $existing->id]));
+        $updated = new Pet(array_merge($existing->toArray(), $put, ['pet_id' => $existing->id]));
         $repo->update($updated);
         sendJSON(['message' => 'Házikedvenc sikeresen frissítve.']);
         break;

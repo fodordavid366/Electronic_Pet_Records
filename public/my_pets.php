@@ -29,14 +29,10 @@
 
                 <form id="registerForm" action="#" method="post">
 
-<!--                    PETS / MODIFICATION-->
                     <div class="mb-3">
-                        <label for="cars" class="form-label">Kisállat</label>
-                        <select id="cars" name="cars" class="form-control">
-                            <option value="volvo">módosítás</option>
-                            <option value="saab">Dió</option>
-                            <option value="fiat">Füge</option>
-                            <option value="audi">Audi</option>
+                        <label for="pets" class="form-label">Kisállat</label>
+                        <select id="pets" name="pets" class="form-control">
+                            <option value="new">Új kisállat hozzáadása</option>
                         </select>
                     </div>
 
@@ -45,7 +41,6 @@
                         <label for="name" class="form-label">Név</label>
                         <input type="text" id="name" name="name" class="form-control" required>
                     </div>
-
 
                     <!-- Gender -->
                     <div class="mb-3">
@@ -71,20 +66,20 @@
                         <input type="text" id="breed" name="breed" class="form-control" required>
                     </div>
 
-<!--                    Doctor-->
+                    <!-- Doctor -->
                     <div class="mb-3">
-                    <label for="cars" class="form-label">Válasszon doktort az alábbiak közül</label>
-                    <select id="cars" name="cars" class="form-control">
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="fiat">Fiat</option>
-                        <option value="audi">Audi</option>
-                    </select>
+                        <label for="doctor" class="form-label">Válasszon doktort</label>
+                        <select id="doctor" name="doctor" class="form-control">
+                            <option value="0">Válassz doktort</option>
+                            <option value="1">Dr. Volvo</option>
+                            <option value="2">Dr. Saab</option>
+                            <option value="3">Dr. Fiat</option>
+                        </select>
                     </div>
 
                     <!-- Buttons -->
-                    <button type="submit" class="btn btn-primary w-100 mb-2">Hozzáad</button>
-                    <button type="reset" class="btn btn-secondary w-100">Törlés</button>
+                    <button type="submit" class="btn btn-primary w-100 mb-2">Mentés</button>
+                    <button type="reset" class="btn btn-secondary w-100">Visszaállítás</button>
 
                 </form>
             </div>
@@ -101,10 +96,9 @@
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="javascript/js.js"></script>
-<script src="javascript/login.js"></script>
         </div>
 
-<script src="javascript/register.js"></script>
+<script src="javascript/my_pets.js"></script>
 </body>
 </html><?php
 
