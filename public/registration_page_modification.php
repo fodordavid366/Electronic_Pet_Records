@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/style.css?v=1">
     <link rel="stylesheet" href="css/navigation_bar_css.css?v=1">
 
-    <title>Regisztráció</title>
+    <title>Pofil módosítás</title>
 
 </head>
 <body>
@@ -25,14 +25,14 @@
 <div class="container-fluid register-container">
     <div class="row g-0">
         <!-- Bal oldali kép -->
-<!--        <div class="col-md-6 d-none d-md-block">-->
-<!--            <img src="images/pet_reg.jpg" alt="Állatos kép" class="register-image">-->
-<!--        </div>-->
+        <!--        <div class="col-md-6 d-none d-md-block">-->
+        <!--            <img src="images/pet_reg.jpg" alt="Állatos kép" class="register-image">-->
+        <!--        </div>-->
 
-        <!-- REGISTRATION -->
+        <!-- MODIFICATION -->
         <div class="col-md-6 d-flex align-items-center justify-content-center p-5">
             <div class="w-100" style="max-width: 400px;">
-                <h2 class="mb-4 text-center p-5">Regisztráció</h2>
+                <h2 class="mb-4 text-center p-5">Módosítás</h2>
 
                 <form id="registerForm" action="#" method="post">
 
@@ -54,17 +54,6 @@
                         <input type="email" id="email" name="email" class="form-control" required>
                     </div>
 
-                    <!-- Password -->
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Jelszó</label>
-                        <input type="password" id="password" name="password" class="form-control" required>
-                    </div>
-
-                    <!-- Password Confirm -->
-                    <div class="mb-3">
-                        <label for="password_verify" class="form-label">Jelszó megerősítés</label>
-                        <input type="password" id="password_verify" name="password_verify" class="form-control" required>
-                    </div>
 
                     <!-- Phone number -->
                     <div class="mb-3">
@@ -79,8 +68,14 @@
                     </div>
 
                     <!-- Buttons -->
-                    <button type="submit" class="btn btn-primary w-100 mb-2">Regisztráció</button>
-                    <button type="reset" class="btn btn-secondary w-100">Törlés</button>
+                    <button type="submit" class="btn btn-primary w-100 mb-2">Módosítás</button>
+                    <button type="reset" class="btn btn-secondary w-100 mb-3">Törlés</button>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Jelszó</label>
+                        <a class="btn btn-primary w-100 mb-2" style="text-decoration: none" href="forgot_password.php">Jelszó módosítás</a></button>
+                    </div>
 
                 </form>
             </div>
@@ -91,3 +86,4 @@
 <script src="javascript/register.js"></script>
 </body>
 </html><?php
+

@@ -1,0 +1,56 @@
+
+/* Állat kártya */
+.animal-container {
+    background: linear-gradient(135deg, #4b3e61, #acbbcc);
+    border-radius: 2rem;
+    padding: 2rem;
+    margin: 7rem auto 2rem;
+    max-width: 700px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    color: #fff;
+}
+
+.animal-header .animal-emoji {
+    font-size: 4rem;
+}
+.animal-header h2 {
+    margin: 0.5rem 0 0;
+    font-size: 2rem;
+}
+
+/* Statisztika kártyák */
+.animal-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+.stat-card {
+    background: rgba(255,255,255,0.2);
+    border-radius: 1rem;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+}
+
+
+/* Megjegyzések */
+.notes-box {
+    background: rgba(255,255,255,0.2);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+.notes-box textarea {
+    width: 100%;
+    min-height: 60px;
+    border-radius: 0.8rem;
+    border: none;
+    padding: 0.5rem;
+    resize: vertical;
+    font-family: inherit;
+}
+.notes-box small {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}

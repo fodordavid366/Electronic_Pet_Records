@@ -36,15 +36,15 @@
                     <a class="nav-link" href="#section2"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="index.php">Kezdőoldal</a>
+                    <a class="nav-link click-scroll" href="index.php">Pácienseim</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_2">Rólunk</a>
+                    <a class="nav-link click-scroll" href="#section_2">Jelentés</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_3">Időpontfoglalásaim</a>
+                    <a class="nav-link click-scroll" href="#section_3">Munkaidő</a>
                 </li>
 
                 <li class="nav-item">
@@ -53,8 +53,8 @@
 
                 <li class="nav-item">
                     <a class="btn custom-btn custom-border-btn rounded-pill ms-lg-3 mt-2 mt-lg-0"
-                       href="login.php">
-                        Bejelentkezés
+                       href="logout.php">
+                        Kijelentkezés
                     </a>
                 </li>
             </ul>
@@ -63,3 +63,4 @@
 </nav>
 </body>
 </html>
+
