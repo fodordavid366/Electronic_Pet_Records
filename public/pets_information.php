@@ -23,51 +23,52 @@
 <?php include 'navigation_bar_doctor.php'; ?>
 
 
-        <div class="animal-container">
-            <div class="text-center mb-3">
-                <h2 class="text-center mb-4">Jelentés</h2>
-                <img class="mb-4" src="images/reg2.png" alt="Animals" style="max-width: 160px;">
-                <h2>Név</h2>
-            </div>
+<div class="animal-container">
+    <div class="text-center mb-3">
+        <h2 class="text-center mb-4">Jelentés</h2>
+        <img class="mb-4" src="images/reg2.png" alt="Animals" style="max-width: 160px;">
+        <h2 id="petName">Név</h2>
+    </div>
 
-            <div class="row g-3">
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="stat-card text-center p-2">🚻<br><b>Nem</b><br>test</div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="stat-card text-center p-2">🐾<br><b>Faj</b><br>test</div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="stat-card text-center p-2">🐾<br><b>Faja</b><br>test</div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="stat-card text-center p-2">🗓️<br><b>Születési dátum</b><br>test</div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="stat-card text-center p-2">👦<br><b>Gazda neve</b><br>test</div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="stat-card text-center p-2">🗓️<br><b>Születési dátum (gazda)</b><br>test</div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="stat-card text-center p-2">📞<br><b>Elérhetőség</b><br>test</div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="stat-card text-center p-2">📧<br><b>E-mail</b><br>test</div>
-                </div>
-            </div>
-
-
-            <div class="notes-box mt-3">
-                <h3>📝 Megjegyzések</h3>
-                <textarea class="form-control mb-2" placeholder="Írd ide a megjegyzésed..."></textarea>
-                <div class="text-center text-md-start">
-                    <button type="button" class="btn btn-primary">Frissítés</button>
-                </div>
-            </div>
+    <div class="row g-3">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="stat-card text-center p-2">🚻<br><b>Nem</b><br><span id="petGender">test</span></div>
         </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="stat-card text-center p-2">🐾<br><b>Faj</b><br><span id="petSpecies">test</span></div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="stat-card text-center p-2">🐾<br><b>Faja</b><br><span id="petBreed">test</span></div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="stat-card text-center p-2">🗓️<br><b>Születési dátum</b><br><span id="petBirth">test</span></div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="stat-card text-center p-2">👦<br><b>Gazda neve</b><br><span id="ownerName">test</span></div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="stat-card text-center p-2">🗓️<br><b>Születési dátum (gazda)</b><br><span id="ownerBirth">test</span></div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="stat-card text-center p-2">📞<br><b>Elérhetőség</b><br><span id="ownerPhone">test</span></div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="stat-card text-center p-2">📧<br><b>E-mail</b><br><span id="ownerEmail">test</span></div>
+        </div>
+    </div>
+
+    <div class="notes-box mt-3">
+        <h3>📝 Megjegyzések</h3>
+        <textarea class="form-control mb-2" placeholder="Írd ide a megjegyzésed..."></textarea>
+        <div class="text-center text-md-start">
+            <button type="button" class="btn btn-primary">Frissítés</button>
+        </div>
+    </div>
+</div>
+
 
 <!-- Bootstrap 5 JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="javascript/pets_information.js"></script>
 </body>
 </html>

@@ -92,7 +92,12 @@ switch ($method) {
             $stmt = $pdo->query("SELECT * FROM appointment");
             $appointments = $stmt->fetchAll();
         } elseif ($user['role'] === 'vet') {
-            $stmt = $pdo->prepare("SELECT * FROM appointment WHERE vet_id = ?");
+            $stmt = $pdo->prepare("SELECT a.*, p.name AS pet_name, CONCAT(v.first_name, ' ', v.last_name) AS vet_name, t.name AS treatment_name
+    FROM appointment a
+    JOIN pet p ON a.pet_id = p.pet_id
+    JOIN vet v ON a.vet_id = v.vet_id
+    JOIN treatment t ON a.treatment_id = t.treatment_id
+    WHERE a.vet_id = ?");
             $stmt->execute([$user['sub']]);
             $appointments = $stmt->fetchAll();
         } else { // owner
