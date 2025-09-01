@@ -43,57 +43,58 @@
 </section>
 
 <!-- Specialities -->
-<form class="specialities text-center" action="#" method="post">
-    <div class="container">
-        <h2>Milyen gondokkal küzd kedvence</h2>
-        <div class="row g-4 justify-content-center">
-            <div class="col-6 col-md-2">
-                <label class="speciality-card">
-                    <input type="radio" name="service" value="Oltások és megelőzés" hidden>
-                    <img src="https://img.icons8.com/ios/100/000000/bone.png" alt=""><br>
-                    Oltások és megelőzés
-                </label>
-            </div>
-            <div class="col-6 col-md-2">
-                <label class="speciality-card">
-                    <input type="radio" name="service" value="Emésztési gondok" hidden>
-                    <img src="https://img.icons8.com/ios/100/000000/back-view.png" alt=""><br>
-                    Emésztési gondok
-                </label>
-            </div>
-            <div class="col-6 col-md-2">
-                <label class="speciality-card">
-                    <input type="radio" name="service" value="Bőr- és szőrproblémák" hidden>
-                    <img src="https://img.icons8.com/ios/100/000000/brain.png" alt=""><br>
-                    Bőr- és szőrproblémák
-                </label>
-            </div>
-            <div class="col-6 col-md-2">
-                <label class="speciality-card">
-                    <input type="radio" name="service" value="Sérülések és balesetek" hidden>
-                    <img src="https://img.icons8.com/ios/100/000000/shoulder.png" alt=""><br>
-                    Sérülések és balesetek
-                </label>
-            </div>
-            <div class="col-6 col-md-2">
-                <label class="speciality-card">
-                    <input type="radio" name="service" value="Mozgásszervi gondok" hidden>
-                    <img src="https://img.icons8.com/ios/100/000000/scale.png" alt=""><br>
-                    Mozgásszervi gondok
-                </label>
-            </div>
-            <div class="col-6 col-md-2">
-                <label class="speciality-card">
-                    <input type="radio" name="service" value="Fog- és szájüregi problémák" hidden>
-                    <img src="https://img.icons8.com/ios/100/000000/headache.png" alt=""><br>
-                    Fog- és szájüregi problémák
-                </label>
-            </div>
-        </div>
-    </div>
-<div class="bg-body py-4 my-4"></div>
+<!--<form class="specialities text-center" action="#" method="post">-->
+<!--    <div class="container">-->
+<!--        <h2>Milyen gondokkal küzd kedvence</h2>-->
+<!--        <div class="row g-4 justify-content-center">-->
+<!--            <div class="col-6 col-md-2">-->
+<!--                <label class="speciality-card">-->
+<!--                    <input type="radio" name="service" value="Oltások és megelőzés" hidden>-->
+<!--                    <img src="https://img.icons8.com/ios/100/000000/bone.png" alt=""><br>-->
+<!--                    Oltások és megelőzés-->
+<!--                </label>-->
+<!--            </div>-->
+<!--            <div class="col-6 col-md-2">-->
+<!--                <label class="speciality-card">-->
+<!--                    <input type="radio" name="service" value="Emésztési gondok" hidden>-->
+<!--                    <img src="https://img.icons8.com/ios/100/000000/back-view.png" alt=""><br>-->
+<!--                    Emésztési gondok-->
+<!--                </label>-->
+<!--            </div>-->
+<!--            <div class="col-6 col-md-2">-->
+<!--                <label class="speciality-card">-->
+<!--                    <input type="radio" name="service" value="Bőr- és szőrproblémák" hidden>-->
+<!--                    <img src="https://img.icons8.com/ios/100/000000/brain.png" alt=""><br>-->
+<!--                    Bőr- és szőrproblémák-->
+<!--                </label>-->
+<!--            </div>-->
+<!--            <div class="col-6 col-md-2">-->
+<!--                <label class="speciality-card">-->
+<!--                    <input type="radio" name="service" value="Sérülések és balesetek" hidden>-->
+<!--                    <img src="https://img.icons8.com/ios/100/000000/shoulder.png" alt=""><br>-->
+<!--                    Sérülések és balesetek-->
+<!--                </label>-->
+<!--            </div>-->
+<!--            <div class="col-6 col-md-2">-->
+<!--                <label class="speciality-card">-->
+<!--                    <input type="radio" name="service" value="Mozgásszervi gondok" hidden>-->
+<!--                    <img src="https://img.icons8.com/ios/100/000000/scale.png" alt=""><br>-->
+<!--                    Mozgásszervi gondok-->
+<!--                </label>-->
+<!--            </div>-->
+<!--            <div class="col-6 col-md-2">-->
+<!--                <label class="speciality-card">-->
+<!--                    <input type="radio" name="service" value="Fog- és szájüregi problémák" hidden>-->
+<!--                    <img src="https://img.icons8.com/ios/100/000000/headache.png" alt=""><br>-->
+<!--                    Fog- és szájüregi problémák-->
+<!--                </label>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--<div class="bg-body py-4 my-4"></div>-->
 
-    <div class="booking text-center">
+<!--    FORM-->
+    <div class="specialities text-center">
         <div class="container">
             <h2>Foglalás</h2>
             <form id="reservationForm" class="row g-3 justify-content-center">
@@ -103,7 +104,7 @@
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <input type="date" id="dateInput" class="form-control" required />
+                    <input type="date" id="dateInput" class="form-control" required>
                 </div>
                 <div class="col-md-3">
                     <select id="treatmentSelect" class="form-control" required>
