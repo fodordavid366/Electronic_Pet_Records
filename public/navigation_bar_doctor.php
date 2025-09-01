@@ -36,15 +36,15 @@
                     <a class="nav-link" href="#section2"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="index.php">Pácienseim</a>
+                    <a class="nav-link click-scroll" href="doctor_reservation.php">Pácienseim</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_2">Jelentés</a>
+                    <a class="nav-link click-scroll" href="pets_information.php">Jelentés</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_3">Munkaidő</a>
+                    <a class="nav-link click-scroll" href="working_hours_doctor.php">Munkaidő</a>
                 </li>
 
                 <li class="nav-item">
