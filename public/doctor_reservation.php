@@ -46,36 +46,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr data-description="Ez egy kedves, három éves macska, aki imádja a játékokat és az alvást.">
-                                        <td class="name">Dr. Nagy Emese</td>
-                                        <td>2025-09-10</td>
-                                        <td>14:00</td>
-                                        <td>Egzotikus állatok vizsgálata</td>
-                                        <td>Várólista</td>
-                                        <td>
-                                            <button class="btn btn-info btn-sm"><a  class="btn btn-info btn-sm" style="text-decoration: none" href="pets_information.php">Megnyitás</a></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dr. Kiss Péter</td>
-                                        <td>2025-09-12</td>
-                                        <td>10:30</td>
-                                        <td>Általános állatorvosi vizsgálat</td>
-                                        <td>Megerősítve</td>
-                                        <td>
-                                            <button class="btn btn-info btn-sm"><a class="btn btn-info btn-sm" style="text-decoration: none" href="pets_information.php">Megnyitás</a></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dr. Nagy Emese</td>
-                                        <td>2025-09-15</td>
-                                        <td>16:00</td>
-                                        <td>Egzotikus állatok oltása</td>
-                                        <td>Várólista</td>
-                                        <td>
-                                            <button class="btn btn-info btn-sm"><a class="btn btn-info btn-sm" style="text-decoration: none" href="pets_information.php">Megnyitás</a></button>
-                                        </td>
-                                    </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -114,37 +85,13 @@
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
 
-                // DataTable inicializálás Bootstrap stílusban
-                const table = new DataTable("#bookingsTable", {
-                    pageLength: 5,
-                    lengthChange: false
-                });
-
-                // Modal kezelés: kattintás az állat nevére
-                document.querySelectorAll('#bookingsTable td.name').forEach(td => {
-                    td.addEventListener('click', () => {
-                        const tr = td.closest('tr');
-                        const name = td.textContent;
-                        const description = tr.dataset.description;
-
-                        document.getElementById('detailModalLabel').textContent = name;
-                        document.getElementById('modalBody').innerHTML = `<p>${description}</p>`;
-
-                        const myModal = new bootstrap.Modal(document.getElementById('detailModal'));
-                        myModal.show();
-                    });
-                });
-
-            });
-        </script>
 
 
         <!-- Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="javascript/js.js"></script>
+        <script src="javascript/doctor_reservation.js"></script>
 
 
 
