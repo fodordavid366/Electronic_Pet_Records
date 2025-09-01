@@ -59,6 +59,12 @@
                         <label for="birth_date" class="form-label">Születési dátum</label>
                         <input type="date" id="birth_date" name="birth_date" class="form-control" required>
                     </div>
+                    <!-- Email értesítések -->
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="emailNotify">
+                        <label class="form-check-label" for="emailNotify">Email értesítések engedélyezése</label>
+                    </div>
+
 
                     <!-- Buttons -->
                     <button type="submit" class="btn btn-primary w-100 mb-2">Módosítás</button>
@@ -75,8 +81,6 @@
         </div>
     </div>
 </div>
-
-<script src="javascript/register.js"></script>
 <script src="javascript/profile_update.js"></script>
 </body>
 </html><?php
