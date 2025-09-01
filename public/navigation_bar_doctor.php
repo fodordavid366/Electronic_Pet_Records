@@ -1,3 +1,14 @@
+<?php
+require_once __DIR__ . '/../core/init.php';
+require_once __DIR__ . '/../includes/auth.php';
+
+$user = authMiddleware();
+
+if (!$user || $user['role'] !== 'vet') {
+    header('Location: doctor_login.php');
+    exit;
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>

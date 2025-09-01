@@ -5,8 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const firstName = document.getElementById('firstname');
     const phone = document.getElementById('phone');
     const birthDate = document.getElementById('birth_date');
+    const emailNotify = document.getElementById('emailNotify');
 
     let originalData = {};
+
     // Betöltjük a profiladatokat
     fetch('../api/profile_update.php', {
         method: 'GET',
@@ -23,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
             firstName.value = data.first_name || '';
             phone.value = data.phone_number || '';
             birthDate.value = data.birth_date || '';
+            emailNotify.checked = data.email_notify === 1; // feltételezzük, hogy az API visszaadja
+
             originalData = data;
         })
         .catch(err => {
@@ -30,15 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Hiba történt az adatok lekérésekor.');
         });
 
-    resetBtn.addEventListener('click', async (e) => {
+    // Reset gomb
+    resetBtn.addEventListener('click', (e) => {
         lastName.value = originalData.last_name || '';
         firstName.value = originalData.first_name || '';
         phone.value = originalData.phone_number || '';
         birthDate.value = originalData.birth_date || '';
+        emailNotify.checked = originalData.email_notify === 1;
     });
 
-
-
+    // Form elküldése (frissítés)
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -46,27 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
             last_name: lastName.value.trim(),
             first_name: firstName.value.trim(),
             phone_number: phone.value.trim(),
-            birth_date: birthDate.value
+            birth_date: birthDate.value,
+            email_notify: emailNotify.checked ? 1 : 0
         };
-
         // **Kliens oldali validáció**
-        if (payload.first_name.length > 40) {
-            alert('Keresztnév túl hosszú.');
-            return;
-        }
-        if (payload.last_name.length > 40) {
-            alert('Vezetéknév túl hosszú.');
-            return;
-        }
-        if (!/^[0-9+\-\s]+$/.test(payload.phone_number) || payload.phone_number.length > 13) {
-            alert('Érvénytelen telefonszám.');
-            return;
-        }
+        if (payload.first_name.length > 40) { alert('Keresztnév túl hosszú.'); return; }
+        if (payload.last_name.length > 40) { alert('Vezetéknév túl hosszú.'); return; }
+        if (!/^[0-9+\-\s]+$/.test(payload.phone_number) || payload.phone_number.length > 13) { alert('Érvénytelen telefonszám.'); return; }
         const d = new Date(payload.birth_date);
-        if (isNaN(d.getTime()) || payload.birth_date !== d.toISOString().split('T')[0]) {
-            alert('Érvénytelen születési dátum.');
-            return;
-        }
+        if (isNaN(d.getTime()) || payload.birth_date !== d.toISOString().split('T')[0]) { alert('Érvénytelen születési dátum.'); return; }
 
         try {
             const response = await fetch('../api/profile_update.php', {
@@ -83,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 alert('Profil sikeresen frissítve!');
             } else {
-                // Szerver oldali hiba alertben
                 alert(result.message || 'Hiba történt a frissítés során.');
             }
         } catch (err) {
@@ -91,5 +83,4 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Hálózati hiba történt.');
         }
     });
-
 });

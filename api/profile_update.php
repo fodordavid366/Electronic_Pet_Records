@@ -22,7 +22,7 @@ switch ($method) {
 
     /* GET: return own profile */
     case 'GET':
-        $stmt = $pdo->prepare("SELECT email, first_name, last_name, phone_number, birth_date
+        $stmt = $pdo->prepare("SELECT email, first_name, last_name, phone_number, birth_date, email_notify
                                FROM $table WHERE $primaryKey = ?");
         $stmt->execute([$userId]);
         $profile = $stmt->fetch();
@@ -40,7 +40,7 @@ switch ($method) {
         }
 
         // Allowed fields to update
-        $allowed = ['first_name', 'last_name', 'phone_number', 'birth_date'];
+        $allowed = ['first_name', 'last_name', 'phone_number', 'birth_date', 'email_notify'];
         $set = [];
         $params = [];
 
@@ -67,6 +67,10 @@ switch ($method) {
                             sendJSON(['message' => 'Érvénytelen születési dátum.'], 400);
                         }
                         break;
+                    case 'email_notify':
+                        $value = $value ? 1 : 0;
+                        break;
+
                 }
 
                 $set[] = "$field = ?";
