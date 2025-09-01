@@ -48,13 +48,6 @@
                         <input type="text" id="firstname" name="firstname" class="form-control" required>
                     </div>
 
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
-                    </div>
-
-
                     <!-- Phone number -->
                     <div class="mb-3">
                         <label for="phone" class="form-label">Telefonszám</label>
@@ -69,7 +62,7 @@
 
                     <!-- Buttons -->
                     <button type="submit" class="btn btn-primary w-100 mb-2">Módosítás</button>
-                    <button type="reset" class="btn btn-secondary w-100 mb-3">Törlés</button>
+                    <button type="button" id="resetBtn" class="btn btn-secondary w-100 mb-3">Visszaállítás</button>
 
                     <!-- Password -->
                     <div class="mb-3">
@@ -84,6 +77,7 @@
 </div>
 
 <script src="javascript/register.js"></script>
+<script src="javascript/profile_update.js"></script>
 </body>
 </html><?php
 

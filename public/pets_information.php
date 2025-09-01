@@ -59,12 +59,34 @@
 
     <div class="notes-box mt-3">
         <h3>📝 Megjegyzések</h3>
-        <textarea class="form-control mb-2" placeholder="Írd ide a megjegyzésed..."></textarea>
+        <textarea class="form-control mb-2" id="CommentTextArea" placeholder="Írd ide a megjegyzésed..."></textarea>
         <div class="text-center text-md-start">
-            <button type="button" class="btn btn-primary">Frissítés</button>
+            <button type="button" class="btn btn-primary" id="CommentBtn">Frissítés</button>
         </div>
     </div>
+
+    <div class="status-box mt-3">
+        <h3>📝 Időpont státusz</h3>
+        <select id="appointmentStatus" class="form-select mb-2">
+            <option value="booked">Booked</option>
+            <option value="completed">Completed</option>
+            <option value="canceled">Canceled</option>
+        </select>
+
+        <div id="cancelReasonContainer" style="display:none;">
+            <label for="cancelReason">Közlemény a tulajdonosnak:</label>
+            <textarea id="cancelReason" class="form-control mb-2" placeholder="Írd ide az üzenetet a tulajdonosnak..."></textarea>
+        </div>
+
+        <div class="text-center text-md-start">
+            <button type="button" id="statusBtn" class="btn btn-primary">Frissítés</button>
+        </div>
+    </div>
+
+
 </div>
+
+
 
 
 <!-- Bootstrap 5 JS Bundle -->

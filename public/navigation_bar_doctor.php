@@ -36,20 +36,13 @@
                     <a class="nav-link" href="#section2"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="index.php">Pácienseim</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_2">Jelentés</a>
+                    <a class="nav-link click-scroll" href="doctor_reservation.php">Pácienseim</a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="#section_3">Munkaidő</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_4">Kiegészítők</a>
-                </li>
 
                 <li class="nav-item">
                     <a class="btn custom-btn custom-border-btn rounded-pill ms-lg-3 mt-2 mt-lg-0"

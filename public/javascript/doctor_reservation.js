@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <td>${app.status}</td>
                 <td>
                     <button class="btn btn-info btn-sm">
-                        <a class="btn btn-info btn-sm" style="text-decoration: none" href="pets_information.php?pet_id=${app.pet_id}">Megnyitás</a>
+                        <a class="btn btn-info btn-sm" style="text-decoration: none" href="pets_information.php?appointment_id=${app.appointment_id}">Megnyitás</a>
                     </button>
                 </td>
             `;
