@@ -1,3 +1,18 @@
+<?php
+require_once __DIR__ . '/../core/init.php';
+require_once __DIR__ . '/../includes/dokiAuth.php';
+
+
+$user = checkDokiAuth();
+
+if (!$user) {
+    header("Location: doctor_login.php");
+    exit;
+}
+?>
+
+
+
 <!doctype html>
 <html lang="en">
 <head>

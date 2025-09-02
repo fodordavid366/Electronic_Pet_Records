@@ -1,14 +1,3 @@
-<?php
-require_once __DIR__ . '/../core/init.php';
-require_once __DIR__ . '/../includes/auth.php';
-
-$user = authMiddleware();
-
-if (!$user || $user['role'] !== 'vet') {
-    header('Location: doctor_login.php');
-    exit;
-}
-?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -29,6 +18,7 @@ if (!$user || $user['role'] !== 'vet') {
     <title>Navigációs bár</title>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="index.php"></a>
@@ -49,7 +39,6 @@ if (!$user || $user['role'] !== 'vet') {
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="doctor_reservation.php">Pácienseim</a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="pets_information.php">Jelentés</a>
                 </li>
@@ -64,7 +53,7 @@ if (!$user || $user['role'] !== 'vet') {
 
                 <li class="nav-item">
                     <a class="btn custom-btn custom-border-btn rounded-pill ms-lg-3 mt-2 mt-lg-0"
-                       href="logout.php">
+                       href="doctor_logout.php">
                         Kijelentkezés
                     </a>
                 </li>

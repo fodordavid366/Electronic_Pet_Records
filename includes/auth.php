@@ -14,16 +14,24 @@ function issueToken(int $userId, string $role): string
     return JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
 }
 
-// Verify JWT token, return payload or null
-function authMiddleware(): ?array
+// Verify JWT token, optionally check role
+function authMiddleware(?string $requiredRole = null): ?array
 {
     $header = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
     if (!preg_match('/Bearer\s(\S+)/', $header, $m)) {
         return null;
     }
+
     try {
         $decoded = JWT::decode($m[1], new Key($_ENV['JWT_SECRET'], 'HS256'));
-        return (array)$decoded;
+        $payload = (array)$decoded;
+
+        // Ha kell szerepkört is ellenőrizni
+        if ($requiredRole !== null && ($payload['role'] ?? null) !== $requiredRole) {
+            return null;
+        }
+
+        return $payload;
     } catch (Exception $e) {
         error_log("JWT decode error: " . $e->getMessage());
         return null;

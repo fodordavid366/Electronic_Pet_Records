@@ -1,10 +1,12 @@
 <?php
 require_once __DIR__ . '/../core/init.php';
-require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/dokiAuth.php';
 
-$user = authMiddleware();
+$user = checkDokiAuth();
 if (!$user) {
-    sendJSON(['message' => 'Nincs jogosultság'], 401);
+    http_response_code(401);
+    echo json_encode(['message' => 'Nincs jogosultság']);
+    exit;
 }
 
 // appointment_id a GET paraméterből

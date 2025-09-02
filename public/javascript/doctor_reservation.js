@@ -1,17 +1,10 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const token = sessionStorage.getItem('jwt_token');
-    if (!token) {
-        window.location.href = 'doctor_login.php';
-        return;
-    }
-
     try {
-        const res = await fetch('../api/appointments.php', {
-            headers: { Authorization: `Bearer ${token}` }
+        const res = await fetch('../api/vet_appointments.php', {
+            credentials: "include" // fontos! küldje a cookie-t
         });
 
         if (!res.ok) {
-            sessionStorage.removeItem('jwt_token'); // lejárt/hibás token
             window.location.href = 'doctor_login.php';
             return;
         }
@@ -25,25 +18,26 @@ document.addEventListener("DOMContentLoaded", async function () {
             tr.innerHTML = `
                 <td class="name">${app.pet_name}</td>
                 <td>${app.starts_at.split(' ')[0]}</td>
-                <td>${ app.starts_at.split(' ')[1]}</td>
+                <td>${app.starts_at.split(' ')[1]}</td>
                 <td>${app.treatment_name}</td>
                 <td>${app.status}</td>
                 <td>
                     <button class="btn btn-info btn-sm">
-                        <a class="btn btn-info btn-sm" style="text-decoration: none" href="pets_information.php?appointment_id=${app.appointment_id}">Megnyitás</a>
+                        <a class="btn btn-info btn-sm" style="text-decoration: none"
+                           href="pets_information.php?appointment_id=${app.appointment_id}">
+                           Megnyitás
+                        </a>
                     </button>
                 </td>
             `;
             tbody.appendChild(tr);
         });
 
-        // DataTable inicializálás
         const table = new DataTable("#bookingsTable", {
             pageLength: 5,
             lengthChange: false
         });
 
-        // Modal kezelés
         document.querySelectorAll('#bookingsTable td.name').forEach(td => {
             td.addEventListener('click', () => {
                 const tr = td.closest('tr');

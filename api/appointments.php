@@ -100,7 +100,7 @@ switch ($method) {
     WHERE a.vet_id = ?");
             $stmt->execute([$user['sub']]);
             $appointments = $stmt->fetchAll();
-        } else { // owner
+        } elseif ($user['role'] === 'owner') { // owner
             $stmt = $pdo->prepare("SELECT a.appointment_id, a.pet_id, a.vet_id, a.description, a.starts_at, a.ends_at, a.treatment_id, a.status,
        p.name AS pet_name,
        CONCAT(v.first_name, ' ', v.last_name) AS vet_name,

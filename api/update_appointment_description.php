@@ -1,18 +1,15 @@
 <?php
 require_once __DIR__ . '/../core/init.php';
-require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/dokiAuth.php';
 
 // mindig JSON legyen a válasz
 header('Content-Type: application/json; charset=utf-8');
 
-$user = authMiddleware();
+$user = checkDokiAuth();
 if (!$user) {
-    sendJSON(['message' => 'Nincs jogosultság'], 401);
-}
-
-// Csak orvos frissíthet
-if ($user['role'] !== 'vet') {
-    sendJSON(['message' => 'Nincs jogosultság'], 403);
+    http_response_code(401);
+    echo json_encode(['message' => 'Nincs jogosultság']);
+    exit;
 }
 
 // bejövő adatok

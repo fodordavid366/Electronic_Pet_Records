@@ -1,18 +1,17 @@
 <?php
 
 require_once __DIR__ . '/../core/init.php';
-require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/dokiAuth.php';
 require_once __DIR__ . '/../includes/mailer.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
-$user = authMiddleware();
-if (!$user) {
-    sendJSON(['message' => 'Nincs jogosultság'], 401);
-}
 
-if ($user['role'] !== 'vet') {
-    sendJSON(['message' => 'Nincs jogosultság'], 403);
+$user = checkDokiAuth();
+if (!$user) {
+    http_response_code(401);
+    echo json_encode(['message' => 'Nincs jogosultság']);
+    exit;
 }
 
 $data = json_decode(file_get_contents('php://input'), true);
