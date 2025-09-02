@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             // Állat
             const tdPet = document.createElement("td");
             tdPet.textContent = app.pet_name || "";
-            tdPet.classList.add("name"); // modalhoz
+            tdPet.classList.add("name");
             tr.appendChild(tdPet);
 
             // Orvos
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             tdStatus.textContent = app.status;
             tr.appendChild(tdStatus);
 
-            // Művelet
+            // Művelet - Lemondás
             const tdAction = document.createElement("td");
             if (app.status === "booked") {
                 const appointmentDate = new Date(app.starts_at);
@@ -70,28 +70,37 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const btn = document.createElement("button");
                     btn.textContent = "Lemondás";
                     btn.className = "btn btn-danger btn-sm cancel-btn";
-                    btn.addEventListener("click", () => cancelAppointment(app.appointment_id));
+                    btn.addEventListener("click", (e) => {
+                        e.stopPropagation(); // ne nyíljon a modal
+                        cancelAppointment(app.appointment_id);
+                    });
                     tdAction.appendChild(btn);
                 }
             }
             tr.appendChild(tdAction);
 
-            tableElement.appendChild(tr);
-        });
+            // Jegyzet ikon
+            const tdNote = document.createElement("td");
+            const icon = document.createElement("i");
+            icon.className = "bi bi-journal-text"; // Bootstrap Icons
+            icon.style.cursor = "pointer";
+            tdNote.appendChild(icon);
+            tr.appendChild(tdNote);
 
-        // Modal listener
-        document.querySelectorAll('#bookingsTable td.name').forEach(td => {
-            td.addEventListener('click', () => {
-                const tr = td.closest('tr');
-                const name = td.textContent;
-                const description = tr.dataset.description;
+            // Modal event az ikonra
+            icon.addEventListener('click', (e) => {
+                e.stopPropagation(); // a sor click ne fusson le
+                const name = tr.querySelector('td.name').textContent;
+                const description = tr.dataset.description || "Nincs jegyzet";
 
-                document.getElementById('detailModalLabel').textContent = name;
+                document.getElementById('detailModalLabel').textContent = "Állatorvos jegyzete";
                 document.getElementById('modalBody').innerHTML = `<p>${description}</p>`;
 
                 const myModal = new bootstrap.Modal(document.getElementById('detailModal'));
                 myModal.show();
             });
+
+            tableElement.appendChild(tr);
         });
 
         bookingsTable = $("#bookingsTable").DataTable({
@@ -114,7 +123,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const data = await res.json().catch(() => ({}));
         alert(data.message || "Hiba történt");
 
-        // Frissítés
         loadAppointments();
     }
 
