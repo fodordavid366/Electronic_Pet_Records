@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/style.css?v=1">
     <link rel="stylesheet" href="css/navigation_bar_css.css?v=1">
 
-    <title>Elfelejtett jelszó</title>
+    <title>Új jelszó kérése</title>
 </head>
 <body>
 <div class="container-fluid register-container">
