@@ -18,17 +18,18 @@
     <title>Új orvos létrehozása</title>
 
 </head>
-<body>
+<body class="pt-5">
 <!--                Navbar-->
 <?php include 'navigation_bar_admin.php'; ?>
 
-<div class="container-fluid register-container">
-    <div class="row g-0">
+<div class="container-fluid register-container mt-5">
+    <div class="row g-4">
 
         <!-- REGISTRATION -->
-        <div class="col-md-6 d-flex align-items-center justify-content-center p-5">
+        <div class="col-lg-4 col-md-5 col-12 d-flex align-items-start justify-content-center">
             <div class="w-100" style="max-width: 400px;">
-                <h2 class="mb-4 text-center p-5">Új orvos létrehozása</h2>
+                <div class="card shadow-sm p-4">
+                    <h2 class="mb-4 text-center mb-5">Új orvos létrehozása</h2>
 
                 <form id="registerForm" action="#" method="post">
 
@@ -83,11 +84,10 @@
             </div>
         </div>
     </div>
-</div>
 
 
 <!-- DOCTORS TABLE -->
-<div class="col-lg-8 col-md-7">
+    <div class="col-lg-8 col-md-7 col-12">
     <div class="card shadow-sm p-4">
         <h4 class="mb-3 text-center">Orvosok</h4>
         <div class="table-responsive">
@@ -126,6 +126,9 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    </div>
+    </div>
 </div>
 
 
