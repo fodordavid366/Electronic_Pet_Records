@@ -98,6 +98,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         }
         updateDeleteButton();
+        if (select.value !== "new") {
+            const qrImg = document.getElementById("petQR");
+            const downloadLink = document.getElementById("downloadQR");
+            qrImg.src = `../api/generate_qr.php?pet_id=${select.value}`;
+            qrImg.style.display = "block";
+
+            downloadLink.href = qrImg.src;
+            downloadLink.style.display = "inline-block";
+            console.log(qrImg);
+        } else {
+            document.getElementById("petQR").style.display = "none";
+            document.getElementById("downloadQR").style.display = "none";
+        }
     });
 
     form.addEventListener("submit", async (e) => {

@@ -79,7 +79,13 @@
                     <button type="reset" class="btn btn-secondary w-100">Visszaállítás</button>
 
                 </form>
-            </div>
+        <div class="mt-3 text-center">
+            <img id="petQR" src="" alt="QR kód" style="display:none;"/>
+            <br>
+            <a id="downloadQR" href="#" download="pet_qr.png" class="btn btn-outline-primary mt-2" style="display:none;">Letöltés</a>
+        </div>
+
+    </div>
 
 <!--            WAVES-->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"

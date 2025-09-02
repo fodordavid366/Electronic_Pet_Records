@@ -1,3 +1,22 @@
+<?php
+require_once __DIR__ . '/../core/init.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../classes/Pet.php';
+require_once __DIR__ . '/../classes/PetRepository.php';
+
+$petId = $_GET['pet_id'] ?? null;
+if (!$petId) {
+    die("Hiányzó pet_id");
+}
+
+$repo = new App\PetRepository($pdo);
+$pet = $repo->find((int)$petId);
+
+if (!$pet) {
+    die("Házikedvenc nem található");
+}
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -22,19 +41,22 @@
 <!-- LOGIN -->
 <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
     <div class="d-flex justify-content-center align-items-center card shadow-lg p-4" style="max-width: 400px; width: 100%; z-index: 1">
-        <h5 class="text-center mb-4">QR kód</h5>
+        <h5 class="text-center mb-4">Állat adatai</h5>
         <img class="text-center" src="images/admin_log.png" alt="Logo" style="max-width: 150px;">
 
 
-            <div class="mb-4">
-                <div class="card shadow-sm mt-4" style="max-width: 400px;">
-                    <div class="card-body">
-                        <h5 class="card-title mb-4">Beolvasott adatok</h5>
-                        <p><strong>Név:</strong> <span id="qrName">-</span></p>
-                        <p><strong>Rendelő:</strong> <span id="qrClinic">-</span></p>
-                    </div>
+        <div class="mb-4">
+            <div class="card shadow-sm mt-4" style="max-width: 400px;">
+                <div class="card-body">
+                    <h5 class="card-title mb-4"><?= htmlspecialchars($petId)?> - <?= htmlspecialchars($pet->name) ?></h5>
+                    <p><strong>Faj:</strong> <?= htmlspecialchars($pet->species) ?></p>
+                    <p><strong>Fajta:</strong> <?= htmlspecialchars($pet->breed) ?></p>
+                    <h5>PETiVETi doo</h5>
+                    <p>Vedd fel velünk a kapcsolatot:</p>
+                    <a href="tel:060 1234567">060 1234567</a>
                 </div>
             </div>
+        </div>
 
 
     </div>
@@ -47,17 +69,8 @@
     </svg>
 </div>
 
-<script>
-    function showQRData(name, clinic) {
-        document.getElementById('qrName').innerText = name;
-        document.getElementById('qrClinic').innerText = clinic;
-    }
-</script>
-
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="javascript/js.js"></script>
-<script src="javascript/login.js"></script>
 
 </body>
 </html>
