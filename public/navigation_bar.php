@@ -30,24 +30,14 @@
                             Mancs
                             <small>Tár</small>
                         </span>
-            <ul class="navbar-nav ms-auto d-flex align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="index.php">Kezdőoldal</a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="my_reservation.php">Időpontfoglalásaim</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="btn custom-btn custom-border-btn rounded-pill ms-lg-3 mt-2 mt-lg-0"
-                       href="login.php">
-                        Bejelentkezés
-                    </a>
-                </li>
+            <ul id="navbarLinks" class="navbar-nav ms-auto d-flex align-items-center">
+                <!-- Links will be injected here -->
             </ul>
+
         </div>
     </div>
 </nav>
+<script src="javascript/navbar.js"></script>
 </body>
 </html>
