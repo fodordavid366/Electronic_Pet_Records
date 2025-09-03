@@ -1,3 +1,51 @@
+<?php
+require_once __DIR__ . '/../core/init.php'; // DB connection
+require_once __DIR__ . '/../vendor/autoload.php'; // MobileDetect
+use Detection\MobileDetect;
+
+$detect = new MobileDetect;
+
+// Device type
+if ($detect->isMobile()) {
+    $device_type = 'phone';
+} elseif ($detect->isTablet()) {
+    $device_type = 'tablet';
+} else {
+    $device_type = 'computer';
+}
+
+// User agent and IP
+$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown';
+$ip_address = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+// Proxy detection
+$proxy = isset($_SERVER['HTTP_X_FORWARDED_FOR']) || isset($_SERVER['HTTP_VIA']) ? 1 : 0;
+
+// Get country, ISP, etc. from third-party API
+$country = '';
+$isp = '';
+$city = '';
+try {
+    $response = @file_get_contents("http://ip-api.com/json/$ip_address?fields=status,country,isp,city");
+    if ($response) {
+        $data = json_decode($response, true);
+        if ($data['status'] === 'success') {
+            $country = $data['country'] ?? '';
+            $isp = $data['isp'] ?? '';
+            $city = $data['city'] ?? '';
+        }
+    }
+} catch (Exception $e) {
+    error_log("IP API error: " . $e->getMessage());
+}
+
+// Insert log into database
+try {
+    $stmt = $pdo->prepare("INSERT INTO log (user_agent, ip_address, country, date_time, device_type, proxy, isp) 
+                           VALUES (?, ?, ?, NOW(), ?, ?, ?)");
+    $stmt->execute([$user_agent, $ip_address, $country, $device_type, $proxy, $isp]);
+} catch (PDOException $e) {
+    error_log("Logging error: " . $e->getMessage());
+}?>
 <!doctype html>
 <html lang="en">
 <head>
