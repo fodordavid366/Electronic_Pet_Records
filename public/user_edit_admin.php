@@ -25,7 +25,60 @@
 <div class="container-fluid register-container mt-5">
     <div class="row g-4">
 
+        <div class="col-lg-4 col-md-5 col-12 d-flex align-items-start justify-content-center">
+            <div class="w-100" style="max-width: 400px;">
+                <div class="card shadow-sm p-4">
+                    <h2 class="mb-4 text-center mb-5">Új orvos létrehozása</h2>
 
+                    <form id="registerForm" action="#" method="post">
+
+                        <div class="mb-3">
+                            <label for="vet_id" class="form-label">ID</label>
+                            <input type="text" id="vet_id" name="vet_id" class="form-control" disabled>
+                        </div>
+                        <!-- Last Name -->
+                        <div class="mb-3">
+                            <label for="lastname" class="form-label">Vezetéknév</label>
+                            <input type="text" id="lastname" name="lastname" class="form-control" required>
+                        </div>
+
+                        <!-- First Name -->
+                        <div class="mb-3">
+                            <label for="firstname" class="form-label">Keresztnév</label>
+                            <input type="text" id="firstname" name="firstname" class="form-control" required>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+
+                        <!-- Phone number -->
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Telefonszám</label>
+                            <input type="text" id="phone" name="phone" class="form-control" required>
+                        </div>
+
+                        <!-- Birthday -->
+                        <div class="mb-3">
+                            <label for="birth_date" class="form-label">Születési dátum</label>
+                            <input type="date" id="birth_date" name="birth_date" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" id="banned" name="banned" class="form-check-input">
+                            <label for="banned" class="form-check-label">Tiltva</label>
+                        </div>
+
+                        <!-- Buttons -->
+                        <button type="submit" class="btn btn-primary w-100 mb-2">Módosít</button>
+                        <button type="reset" class="btn btn-secondary w-100">Törlés</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
         <!-- PROFILES TABLE -->
         <div class="row justify-content-center">
             <div class="col-lg-8 col-12">
@@ -41,6 +94,7 @@
                             <th>E-mail</th>
                             <th>Születési dátum</th>
                             <th>Elérhetőség</th>
+                            <th>Tiltva</th>
                             <th>Művelet</th>
                             <th>Művelet</th>
                         </tr>
@@ -53,6 +107,7 @@
                             <td>emese@nagy.hu</td>
                             <td>1985-05-12</td>
                             <td>+36 30 123 4567</td>
+                            <td>0</td>
                             <td class="text-center">
                                 <button class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i> Módosítás</button>
                             </td>
@@ -68,8 +123,13 @@
     </div>
 </div>
 
-
-<script src="javascript/register.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery (DataTables szükséges) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="javascript/user_edit_admin.js"></script>
 </body>
 </html><?php
 

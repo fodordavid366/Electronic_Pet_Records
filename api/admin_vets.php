@@ -13,7 +13,6 @@ require_once __DIR__ . '/../includes/db.php'; // your PDO $pdo
 require_once __DIR__ . '/../classes/Vet.php';
 require_once __DIR__ . '/../classes/VetRepository.php';
 
-$pdo = new PDO("mysql:host=localhost;dbname=hk_e_ny", "root", "");
 use App\Vet;
 use App\VetRepository;
 

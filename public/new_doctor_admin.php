@@ -138,6 +138,22 @@ if (!isset($_SESSION['admin_id'])) {
             </table>
         </div>
     </div>
+        <div class="card shadow-sm p-4 mt-4">
+            <h4 class="mb-3 text-center">Orvosok statisztikái</h4>
+            <div class="table-responsive">
+                <table id="vetStatsTable" class="table table-striped table-bordered align-middle">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Név</th>
+                        <th>Időpontok száma</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
     </div>
 </div>

@@ -5,6 +5,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let editingId = null;
 
+
+    const statsTableBody = document.querySelector("#vetStatsTable tbody");
+    async function vetStatistics(){
+        try {
+            const res = await fetch("../api/vet_statistics.php");
+            const data = await res.json();
+
+            if (data.success) {
+                statsTableBody.innerHTML = "";
+                data.data.forEach(stat => {
+                    const row = `
+                    <tr>
+                        <td>${stat.vet_id}</td>
+                        <td>${stat.first_name} ${stat.last_name}</td>
+                        <td>${stat.appointment_count}</td>
+                    </tr>
+                `;
+                    statsTableBody.insertAdjacentHTML("beforeend", row);
+                });
+            } else {
+                statsTableBody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">${data.message}</td></tr>`;
+            }
+        } catch (err) {
+            statsTableBody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">Hiba történt: ${err.message}</td></tr>`;
+        }
+    }
+    vetStatistics();
+
+
     // Fetch all vets from backend
     async function loadVets() {
         const res = await fetch('../api/admin_vets.php', { credentials: 'same-origin' });

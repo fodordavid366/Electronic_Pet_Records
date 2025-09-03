@@ -36,24 +36,16 @@
                     <a class="nav-link" href="#section2"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="doctor_reservation.php">Pácienseim</a>
+                    <a class="nav-link click-scroll" href="new_doctor_admin.php">Orvosok</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="pets_information.php">Jelentés</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="working_hours_doctor.php">Munkaidő</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_4">Kiegészítők</a>
+                    <a class="nav-link click-scroll" href="user_edit_admin.php">Jelentés</a>
                 </li>
 
                 <li class="nav-item">
                     <a class="btn custom-btn custom-border-btn rounded-pill ms-lg-3 mt-2 mt-lg-0"
-                       href="logout.php">
+                       href="admin_logout.php">
                         Kijelentkezés
                     </a>
                 </li>
