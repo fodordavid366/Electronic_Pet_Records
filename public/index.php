@@ -40,15 +40,15 @@
 
                     <div class="col-lg-6 col-12 mb-5 mb-lg-0 mt-5">
                         <h1 class="cd-headline rotate-1 text-white mb-4 pb-2">
-                            <span>Page is</span>
+                            <span>A kedvenc</span>
                             <span class="cd-words-wrapper">
-                                    <b class="is-visible">Modern</b>
-                                    <b>Test</b>
-                                    <b>Test</b>
+                                    <b class="is-visible">Boldog</b>
+                                    <b>Egészséges</b>
+                                    <b>Szeretett</b>
                                 </span>
                         </h1>
 
-                        <h2 class="text-white">Welcome to the page</h2>
+                        <h2 class="text-white">Találja meg a tökéletes gondoskodást kisállatának</h2>
                     </div>
 
                     <div class="col-lg-6 col-12 mt-5">
@@ -187,6 +187,7 @@
                         </div>
                         <div class="col-lg-6 text-center">
                             <img src="images/doctor5.jpg" alt="Doctor">
+                            <img src="images/asd.png" alt="Doctor">
                         </div>
                     </div>
                 </div>
@@ -203,8 +204,8 @@
                     <a class="navbar-brand d-flex align-items-center" href="index.php">
                         <img src="images/logo.png" class="navbar-brand-image img-fluid" alt="logo">
                         <span class="navbar-brand-text">
-                                name of the
-                                <small>Page</small>
+                               Mancs
+                                <small>Tár</small>
                             </span>
                     </a>
                 </div>
