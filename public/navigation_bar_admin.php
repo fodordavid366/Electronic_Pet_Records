@@ -28,8 +28,8 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <img src="images/logo.png" class="navbar-brand-image img-fluid" alt="logo">
             <span class="navbar-brand-text">
-                            The name
-                            <small>of the page</small>
+                            Mancs
+                            <small>Tár</small>
                         </span>
             <ul class="navbar-nav ms-auto d-flex align-items-center">
                 <li class="nav-item">
@@ -40,7 +40,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="user_edit_admin.php">Jelentés</a>
+                    <a class="nav-link click-scroll" href="user_edit_admin.php">Felhasználók</a>
                 </li>
 
                 <li class="nav-item">
