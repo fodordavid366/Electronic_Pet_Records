@@ -1,0 +1,995 @@
+openapi: 3.0.3
+info:
+  title: Elektronikus Nyilvántartás API
+  description: >-
+    API a házi kedvencek, kezelések, időpontok, felhasználók és állatorvosok
+    kezelésére. A specifikáció a beküldött 23 PHP végpont alapján készült.
+  version: 1.0.0
+servers:
+  - url: http://la.stud.vts.su.ac.rs/ElektronikusNyilvantartasHaziKedvencekrol/api
+    description: Production
+
+tags:
+  - name: Auth
+  - name: Admin
+  - name: Owners
+  - name: Vets
+  - name: Pets
+  - name: Appointments
+  - name: Treatments
+  - name: Profile
+  - name: Utility
+  - name: Statistics
+
+paths:
+  /register.php:
+    post:
+      tags: [Auth]
+      summary: Felhasználó (owner) regisztráció
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, password_verify, firstname, lastname, phone, birth_date]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, format: password }
+                password_verify: { type: string, format: password }
+                firstname: { type: string }
+                lastname: { type: string }
+                phone: { type: string }
+                birth_date: { type: string, format: date }
+      responses:
+        '201':
+          description: Sikeres regisztráció – aktiváló e-mail elküldve
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Message' }
+        '400': { description: Hibás bemenet }
+        '409': { description: E-mail már létezik }
+        '500': { description: Belső szerverhiba }
+
+  /activate.php:
+    post:
+      tags: [Auth]
+      summary: Fiók aktiválása tokennel
+      description: A `public/activate.php?token=...` link alternatívájaként JSON-ban is küldhető token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token]
+              properties:
+                token: { type: string }
+      responses:
+        '200': { description: Fiók aktiválva, bejelentkezés lehetséges, content: { application/json: { schema: { $ref: '#/components/schemas/Message' } } } }
+        '400': { description: Érvénytelen vagy lejárt token }
+        '500': { description: Belső hiba }
+
+  /login.php:
+    post:
+      tags: [Auth]
+      summary: Owner bejelentkezés (JWT)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, format: password }
+      responses:
+        '200':
+          description: Sikeres bejelentkezés, JWT visszaadva
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: { type: string }
+                  token: { type: string, description: Bearer JWT }
+        '401': { description: Hibás bejelentkezési adatok }
+        '403': { description: Fiók nincs aktiválva vagy tiltott }
+        '400': { description: Hibás bemenet }
+        '500': { description: Belső hiba }
+
+  /vet_login.php:
+    post:
+      tags: [Auth, Vets]
+      summary: Állatorvos bejelentkezés (JWT + HttpOnly cookie)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, format: password }
+      responses:
+        '200':
+          description: Sikeres bejelentkezés, auth_token sütiben beállítva
+          headers:
+            Set-Cookie:
+              schema: { type: string }
+              description: auth_token JWT (HttpOnly) 2 órára
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+        '400': { description: Hibás bemenet }
+        '401': { description: Hibás bejelentkezés }
+
+  /admin_login.php:
+    post:
+      tags: [Auth, Admin]
+      summary: Admin bejelentkezés (PHP session)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, format: password }
+      responses:
+        '200':
+          description: Sikeres bejelentkezés (session létrehozva)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  message: { type: string }
+        '400': { description: Hibás bemenet }
+        '401': { description: Hibás hitelesítés }
+
+  /forgot_password_request.php:
+    post:
+      tags: [Auth]
+      summary: Elfelejtett jelszó – e-mail küldése reset linkkel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email: { type: string, format: email }
+      responses:
+        '200': { description: Ha a fiók létezik, e-mail elküldve }
+        '400': { description: Hibás bemenet }
+        '500': { description: Belső hiba }
+
+  /reset_password_request.php:
+    post:
+      tags: [Auth]
+      summary: Jelszó visszaállítása tokennel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token, new_password, new_password_verify]
+              properties:
+                token: { type: string }
+                new_password: { type: string, format: password }
+                new_password_verify: { type: string, format: password }
+      responses:
+        '200': { description: Jelszó sikeresen módosítva }
+        '400': { description: Hibás bemenet vagy gyenge jelszó }
+        '401': { description: Érvénytelen / lejárt token }
+
+  /change_password.php:
+    post:
+      tags: [Auth]
+      summary: Bejelentkezett felhasználó jelszavának módosítása (owner/vet)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [old_password, new_password, new_password_verify]
+              properties:
+                old_password: { type: string, format: password }
+                new_password: { type: string, format: password }
+                new_password_verify: { type: string, format: password }
+      responses:
+        '200': { description: Jelszó megváltoztatva }
+        '400': { description: Hibás bemenet / gyenge jelszó }
+        '401': { description: Nincs jogosultság }
+        '403': { description: Hibás jelenlegi jelszó }
+
+  /profile_update.php:
+    get:
+      tags: [Profile]
+      summary: Saját profil lekérése (owner vagy vet)
+      security: [ { bearerAuth: [] } ]
+      responses:
+        '200':
+          description: Profil adatok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email: { type: string }
+                  first_name: { type: string }
+                  last_name: { type: string }
+                  phone_number: { type: string }
+                  birth_date: { type: string, format: date }
+                  email_notify: { type: integer, enum: [0,1] }
+        '401': { description: Nincs jogosultság }
+        '404': { description: Nem található }
+    put:
+      tags: [Profile]
+      summary: Saját profil módosítása (owner vagy vet)
+      security: [ { bearerAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name: { type: string }
+                last_name: { type: string }
+                phone_number: { type: string }
+                birth_date: { type: string, format: date }
+                email_notify: { type: integer, enum: [0,1] }
+      responses:
+        '200': { description: Profil frissítve }
+        '400': { description: Hibás bemenet }
+        '401': { description: Nincs jogosultság }
+
+  /pets.php:
+    get:
+      tags: [Pets]
+      summary: Házikedvencek lekérése (saját jogkör szerint)
+      security: [ { bearerAuth: [] } ]
+      parameters:
+        - name: id
+          in: query
+          required: false
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Pet vagy listája
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Pet'
+                  - type: array
+                    items: { $ref: '#/components/schemas/Pet' }
+        '401': { description: Nincs jogosultság }
+        '404': { description: Nem található }
+    post:
+      tags: [Pets]
+      summary: Új házikedvenc létrehozása (owner/admin)
+      security: [ { bearerAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PetCreate' }
+      responses:
+        '201': { description: Házikedvenc hozzáadva }
+        '400': { description: Hibás bemenet }
+        '403': { description: Nincs jogosultság }
+    put:
+      tags: [Pets]
+      summary: Házikedvenc módosítása
+      security: [ { bearerAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Pet'
+      responses:
+        '200': { description: Házikedvenc frissítve }
+        '400': { description: Hibás bemenet }
+        '403': { description: Nincs jogosultság }
+    delete:
+      tags: [Pets]
+      summary: Házikedvenc törlése
+      security: [ { bearerAuth: [] } ]
+      parameters:
+        - name: pet_id
+          in: query
+          required: true
+          schema: { type: integer }
+      responses:
+        '200': { description: Törölve }
+        '400': { description: Hiányzó azonosító }
+        '403': { description: Nincs jogosultság }
+
+  /appointments.php:
+    get:
+      tags: [Appointments]
+      summary: Időpontok lekérése vagy szabad időpontok számítása
+      security: [ { bearerAuth: [] } ]
+      parameters:
+        - name: action
+          in: query
+          schema: { type: string, enum: [slots] }
+        - name: vet_id
+          in: query
+          schema: { type: integer }
+        - name: date
+          in: query
+          schema: { type: string, format: date }
+        - name: treatment_id
+          in: query
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Lista vagy szabad idősávok
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: array
+                    items: { $ref: '#/components/schemas/Appointment' }
+                  - type: object
+                    properties:
+                      available_slots:
+                        type: array
+                        items: { type: string, example: '09:30' }
+        '400': { description: Hiányzó paraméterek }
+        '401': { description: Nincs jogosultság }
+        '404': { description: Nem található / nincs rendelés }
+    post:
+      tags: [Appointments]
+      summary: Új időpont foglalása
+      security: [ { bearerAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [pet_id, vet_id, treatment_id, starts_at]
+              properties:
+                pet_id: { type: integer }
+                vet_id: { type: integer }
+                treatment_id: { type: integer }
+                starts_at: { type: string, format: date-time }
+                description: { type: string }
+      responses:
+        '201': { description: Időpont lefoglalva }
+        '400': { description: Hibás bemenet }
+        '403': { description: Nincs jogosultság az adott kisállathoz }
+        '404': { description: Érvénytelen kezelés }
+        '409': { description: Időpont ütközés }
+    patch:
+      tags: [Appointments]
+      summary: Időpont módosítása (státusz/megjegyzés)
+      security: [ { bearerAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [appointment_id]
+              properties:
+                appointment_id: { type: integer }
+                status: { type: string, enum: [booked, completed, canceled] }
+                description: { type: string }
+      responses:
+        '200': { description: Időpont frissítve }
+        '400': { description: Hibás bemenet }
+        '401': { description: Nincs jogosultság }
+        '403': { description: Hozzáférés megtagadva }
+        '404': { description: Nem található }
+    delete:
+      tags: [Appointments]
+      summary: Időpont törlése
+      security: [ { bearerAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [appointment_id]
+              properties:
+                appointment_id: { type: integer }
+      responses:
+        '200': { description: Időpont törölve }
+        '400': { description: Hibás bemenet }
+        '401': { description: Nincs jogosultság }
+        '403': { description: Hozzáférés megtagadva }
+        '404': { description: Nem található }
+
+  /pet_info.php:
+    get:
+      tags: [Pets, Vets]
+      summary: Állatorvos által elérhető állat + tulaj adatok egy időponthoz
+      security: [ { cookieAuth: [] } ]
+      parameters:
+        - name: appointment_id
+          in: query
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Pet + owner + appointment adatok
+          content:
+            application/json:
+              schema:
+                type: object
+        '401': { description: Nincs jogosultság }
+        '404': { description: Nem található }
+
+  /update_appointment_description.php:
+    post:
+      tags: [Appointments, Vets]
+      summary: Időpont megjegyzés frissítése (állatorvos)
+      security: [ { cookieAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [appointment_id, description]
+              properties:
+                appointment_id: { type: integer }
+                description: { type: string }
+      responses:
+        '200': { description: Megjegyzés frissítve }
+        '400': { description: Hibás bemenet }
+        '401': { description: Nincs jogosultság }
+
+  /update_appointment_status.php:
+    post:
+      tags: [Appointments, Vets]
+      summary: Időpont státusz frissítése, opcionális lemondó üzenettel
+      security: [ { cookieAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [appointment_id, status]
+              properties:
+                appointment_id: { type: integer }
+                status: { type: string, enum: [booked, completed, canceled] }
+                cancel_message: { type: string }
+      responses:
+        '200': { description: Státusz frissítve }
+        '400': { description: Hibás bemenet }
+        '401': { description: Nincs jogosultság }
+        '500': { description: Belső hiba }
+
+  /vet_appointments.php:
+    get:
+      tags: [Appointments, Vets]
+      summary: Adott állatorvos időpontjai (bejelentkezett vet)
+      security: [ { cookieAuth: [] } ]
+      responses:
+        '200':
+          description: Időpontok listája
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Appointment' }
+        '401': { description: Nincs jogosultság }
+    patch:
+      tags: [Appointments, Vets]
+      summary: Vet időpont szerkesztése (státusz/megjegyzés)
+      security: [ { cookieAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [appointment_id]
+              properties:
+                appointment_id: { type: integer }
+                status: { type: string, enum: [booked, completed, canceled] }
+                description: { type: string }
+      responses:
+        '200': { description: Időpont frissítve }
+        '400': { description: Hibás bemenet }
+        '401': { description: Nincs jogosultság }
+        '403': { description: Nem a bejelentkezett orvos időpontja }
+        '404': { description: Nem található }
+
+  /vet_schedule.php:
+    get:
+      tags: [Vets]
+      summary: Bejelentkezett állatorvos munkarendje
+      security: [ { cookieAuth: [] } ]
+      responses:
+        '200':
+          description: Munkarend sorok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    vet_id: { type: integer }
+                    weekday: { type: integer, minimum: 1, maximum: 7 }
+                    start_time: { type: string, example: '08:00:00' }
+                    end_time: { type: string, example: '16:00:00' }
+                    slot_minutes: { type: integer }
+        '401': { description: Nincs jogosultság }
+    post:
+      tags: [Vets]
+      summary: Bejelentkezett állatorvos munkarendjének mentése
+      description: >-
+        Minden naphoz `*_start`, `*_end`, `*_number` mezőkkel `x-www-form-urlencoded` formában.
+      security: [ { cookieAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                monday_start: { type: string, example: '08:00' }
+                monday_end: { type: string, example: '16:00' }
+                monday_number: { type: integer, example: 30 }
+                tuesday_start: { type: string }
+                tuesday_end: { type: string }
+                tuesday_number: { type: integer }
+                wednesday_start: { type: string }
+                wednesday_end: { type: string }
+                wednesday_number: { type: integer }
+                thursday_start: { type: string }
+                thursday_end: { type: string }
+                thursday_number: { type: integer }
+                friday_start: { type: string }
+                friday_end: { type: string }
+                friday_number: { type: integer }
+                saturday_start: { type: string }
+                saturday_end: { type: string }
+                saturday_number: { type: integer }
+                sunday_start: { type: string }
+                sunday_end: { type: string }
+                sunday_number: { type: integer }
+      responses:
+        '200': { description: Munkarend mentve }
+        '400': { description: Nincs adat }
+        '401': { description: Nincs jogosultság }
+        '500': { description: Belső hiba }
+
+  /treatments.php:
+    get:
+      tags: [Treatments]
+      summary: Kezelések lekérése (összes vagy egy azonosítóval)
+      parameters:
+        - name: id
+          in: query
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Kezelés(ek)
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Treatment'
+                  - type: array
+                    items: { $ref: '#/components/schemas/Treatment' }
+    post:
+      tags: [Treatments]
+      summary: Új kezelés létrehozása
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, duration_min, cost]
+              properties:
+                name: { type: string }
+                duration_min: { type: integer }
+                cost: { type: number }
+      responses:
+        '200': { description: Létrehozva }
+        '400': { description: Hibás bemenet }
+        '500': { description: Belső hiba }
+    put:
+      tags: [Treatments]
+      summary: Kezelés módosítása
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                duration_min: { type: integer }
+                cost: { type: number }
+      responses:
+        '200': { description: Módosítva }
+        '400': { description: Hibás bemenet }
+        '500': { description: Belső hiba }
+    delete:
+      tags: [Treatments]
+      summary: Kezelés törlése
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema: { type: integer }
+      responses:
+        '200': { description: Törölve }
+        '400': { description: Hiányzó azonosító }
+        '500': { description: Belső hiba }
+
+  /vets.php:
+    get:
+      tags: [Vets]
+      summary: Orvos(ok) lekérése
+      parameters:
+        - name: id
+          in: query
+          required: false
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Orvos vagy lista (jelszó nélkül)
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/VetPublic'
+                  - type: array
+                    items: { $ref: '#/components/schemas/VetPublic' }
+    post:
+      tags: [Vets, Admin]
+      summary: Új orvos létrehozása (admin Bearer)
+      security: [ { bearerAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/VetCreate'
+      responses:
+        '200': { description: Orvos létrehozva }
+        '400': { description: Hibás bemenet }
+        '401': { description: Nincs jogosultság }
+    put:
+      tags: [Vets, Admin]
+      summary: Orvos frissítése (admin Bearer)
+      security: [ { bearerAuth: [] } ]
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/VetUpdate'
+      responses:
+        '200': { description: Orvos frissítve }
+        '400': { description: Hibás bemenet }
+        '401': { description: Nincs jogosultság }
+    delete:
+      tags: [Vets, Admin]
+      summary: Orvos törlése (admin Bearer)
+      security: [ { bearerAuth: [] } ]
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema: { type: integer }
+      responses:
+        '200': { description: Orvos törölve }
+        '400': { description: Hibás azonosító }
+        '401': { description: Nincs jogosultság }
+
+  /admin_vets.php:
+    get:
+      tags: [Admin, Vets]
+      summary: Összes orvos listázása (admin session)
+      security: [ { sessionAuth: [] } ]
+      responses:
+        '200': { description: Lista }
+        '401': { description: Nincs jogosultság }
+    post:
+      tags: [Admin, Vets]
+      summary: Orvos hozzáadása (admin session)
+      security: [ { sessionAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/VetCreate' }
+      responses:
+        '200': { description: Létrehozva }
+        '400': { description: Hibás bemenet }
+        '401': { description: Nincs jogosultság }
+    put:
+      tags: [Admin, Vets]
+      summary: Orvos frissítése (admin session)
+      security: [ { sessionAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id]
+              properties:
+                id: { type: integer }
+                first_name: { type: string }
+                last_name: { type: string }
+                email: { type: string }
+                phone_number: { type: string }
+                birth_date: { type: string, format: date }
+                specialization: { type: string }
+                password: { type: string, format: password }
+      responses:
+        '200': { description: Frissítve }
+        '400': { description: Hibás bemenet }
+        '401': { description: Nincs jogosultság }
+    delete:
+      tags: [Admin, Vets]
+      summary: Orvos törlése (admin session)
+      security: [ { sessionAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id]
+              properties:
+                id: { type: integer }
+      responses:
+        '200': { description: Törölve }
+        '400': { description: Hibás bemenet }
+        '401': { description: Nincs jogosultság }
+
+  /admin_owners.php:
+    get:
+      tags: [Admin, Owners]
+      summary: Tulajdonosok listázása
+      parameters:
+        - name: action
+          in: query
+          required: true
+          schema: { type: string, enum: [list] }
+      responses:
+        '200':
+          description: Tulajdonosok
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/OwnerAdmin' }
+    put:
+      tags: [Admin, Owners]
+      summary: Tulajdonos frissítése
+      parameters:
+        - name: action
+          in: query
+          required: true
+          schema: { type: string, enum: [update] }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id, last_name, first_name, email, phone, birth_date]
+              properties:
+                id: { type: integer }
+                last_name: { type: string }
+                first_name: { type: string }
+                email: { type: string }
+                phone: { type: string }
+                birth_date: { type: string, format: date }
+                banned: { type: boolean }
+      responses:
+        '200': { description: Siker }
+        '400': { description: Hibás bemenet }
+    delete:
+      tags: [Admin, Owners]
+      summary: Tulajdonos törlése
+      parameters:
+        - name: action
+          in: query
+          required: true
+          schema: { type: string, enum: [delete] }
+        - name: id
+          in: query
+          required: true
+          schema: { type: integer }
+      responses:
+        '200': { description: Törölve }
+        '400': { description: Hibás bemenet }
+
+  /generate_qr.php:
+    get:
+      tags: [Utility]
+      summary: QR-kód képgenerálás adott pet_id-hoz
+      parameters:
+        - name: pet_id
+          in: query
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: PNG QR-kód
+          content:
+            image/png:
+              schema: { type: string, format: binary }
+        '400': { description: Hiányzó pet_id }
+
+  /vet_statistics.php:
+    get:
+      tags: [Statistics]
+      summary: Orvosok időpont-száma szerint rendezve
+      responses:
+        '200':
+          description: Statisztika
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        vet_id: { type: integer }
+                        first_name: { type: string }
+                        last_name: { type: string }
+                        appointment_count: { type: integer }
+        '500': { description: Belső hiba }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: auth_token
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: PHPSESSID
+
+  schemas:
+    Message:
+      type: object
+      properties:
+        message: { type: string }
+
+    OwnerAdmin:
+      type: object
+      properties:
+        owner_id: { type: integer }
+        last_name: { type: string }
+        first_name: { type: string }
+        email: { type: string }
+        phone_number: { type: string }
+        birth_date: { type: string, format: date }
+        is_banned: { type: boolean }
+
+    VetPublic:
+      type: object
+      properties:
+        vet_id: { type: integer }
+        first_name: { type: string }
+        last_name: { type: string }
+        email: { type: string }
+        phone_number: { type: string }
+        birth_date: { type: string, format: date }
+        specialization: { type: string }
+
+    VetCreate:
+      type: object
+      required: [first_name, last_name, email, phone_number, birth_date, specialization, password]
+      properties:
+        first_name: { type: string }
+        last_name: { type: string }
+        email: { type: string }
+        phone_number: { type: string }
+        birth_date: { type: string, format: date }
+        specialization: { type: string }
+        password: { type: string, format: password }
+
+    VetUpdate:
+      type: object
+      properties:
+        first_name: { type: string }
+        last_name: { type: string }
+        email: { type: string }
+        phone_number: { type: string }
+        birth_date: { type: string, format: date }
+        specialization: { type: string }
+        password: { type: string, format: password }
+
+    Pet:
+      type: object
+      properties:
+        pet_id: { type: integer }
+        owner_id: { type: integer }
+        vet_id: { type: integer }
+        name: { type: string }
+        gender: { type: string }
+        birth_date: { type: string, format: date }
+        species: { type: string }
+        breed: { type: string }
+    PetCreate:
+      type: object
+      required: [name, gender, birth_date, species, breed, vet_id]
+      properties:
+        name: { type: string }
+        gender: { type: string }
+        birth_date: { type: string, format: date }
+        species: { type: string }
+        breed: { type: string }
+        vet_id: { type: integer }
+
+    Treatment:
+      type: object
+      properties:
+        treatment_id: { type: integer }
+        name: { type: string }
+        duration_min: { type: integer }
+        cost: { type: number }
+
+    Appointment:
+      type: object
+      properties:
+        appointment_id: { type: integer }
+        pet_id: { type: integer }
+        vet_id: { type: integer }
+        description: { type: string }
+        starts_at: { type: string, format: date-time }
+        ends_at: { type: string, format: date-time }
+        treatment_id: { type: integer }
+        status: { type: string, enum: [booked, completed, canceled] }
+        pet_name: { type: string }
+        vet_name: { type: string }
+        treatment_name: { type: string }

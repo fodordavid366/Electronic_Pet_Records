@@ -11,16 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 <a class="nav-link click-scroll" href="index.php">Kezdőoldal</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link click-scroll" href="my_reservation.php">Időpontfoglalásaim</a>
+                <a class="nav-link click-scroll" href="my_reservation.php">Időpontjaim</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link click-scroll" href="my_pets.php">Házi Kedvenceim</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link click-scroll" href="profile_modification.php">Időpontfoglalásaim</a>
+                <a class="nav-link click-scroll" href="profile_modification.php">Profil szerkesztés</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link click-scroll" href="reservation.php">Időpontfoglalásaim</a>
+                <a class="nav-link click-scroll" href="reservation.php">Időpontfoglalás</a>
             </li>
             <li class="nav-item">
                 <a id="logoutBtn" href="logout.php" class="btn custom-btn custom-border-btn rounded-pill ms-lg-3 mt-2 mt-lg-0">
