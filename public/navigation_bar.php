@@ -20,7 +20,6 @@
 <body>
 <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.php"></a>
 
         <button class="navbar-toggler navbar-toogle-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -28,27 +27,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <img src="images/logo.png" class="navbar-brand-image img-fluid" alt="logo">
             <span class="navbar-brand-text">
-                            The name
-                            <small>of the page</small>
+                            Mancs
+                            <small>Tár</small>
                         </span>
             <ul class="navbar-nav ms-auto d-flex align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="#section2"></a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="index.php">Kezdőoldal</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_2">Rólunk</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_3">Időpontfoglalásaim</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_4">Kiegészítők</a>
+                    <a class="nav-link click-scroll" href="my_reservation.php">Időpontfoglalásaim</a>
                 </li>
 
                 <li class="nav-item">
