@@ -1,4 +1,12 @@
-<!doctype html>
+<?php
+session_start();
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: admin_login.php");
+    exit;
+}
+?>
+
+    <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -33,7 +41,10 @@
 
                 <form id="registerForm" action="#" method="post">
 
-
+                    <div class="mb-3">
+                        <label for="vet_id" class="form-label">ID</label>
+                        <input type="text" id="vet_id" name="vet_id" class="form-control" disabled>
+                    </div>
                     <!-- Last Name -->
                     <div class="mb-3">
                         <label for="lastname" class="form-label">Vezetéknév</label>
@@ -55,7 +66,7 @@
                     <!-- Password -->
                     <div class="mb-3">
                         <label for="password" class="form-label">Jelszó</label>
-                        <input type="password" id="password" name="password" class="form-control" required>
+                        <input type="password" id="password" name="password" class="form-control">
                     </div>
 
                     <!-- Phone number -->
@@ -131,8 +142,13 @@
     </div>
 </div>
 
-
-<script src="javascript/register.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery (DataTables szükséges) -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="javascript/admin_vets.js"></script>
 </body>
 </html><?php
 
