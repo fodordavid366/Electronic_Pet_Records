@@ -29,8 +29,8 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <img src="images/logo.png" class="navbar-brand-image img-fluid" alt="logo">
             <span class="navbar-brand-text">
-                            The name
-                            <small>of the page</small>
+                            Mancs
+                            <small>tár</small>
                         </span>
             <ul class="navbar-nav ms-auto d-flex align-items-center">
                 <li class="nav-item">
@@ -39,16 +39,9 @@
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="doctor_reservation.php">Pácienseim</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="pets_information.php">Jelentés</a>
-                </li>
 
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="working_hours_doctor.php">Munkaidő</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_4">Kiegészítők</a>
                 </li>
 
                 <li class="nav-item">
