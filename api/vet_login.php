@@ -12,7 +12,6 @@ error_reporting(E_ALL);
 header('Content-Type: application/json; charset=utf-8');
 
 
-$pdo = new PDO("mysql:host=localhost;dbname=hk_e_ny", "root", "");
 $vetRepo = new VetRepository($pdo);
 
 $data = json_decode(file_get_contents("php://input"), true);

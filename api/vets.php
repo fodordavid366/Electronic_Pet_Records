@@ -2,12 +2,12 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../classes/Vet.php';
 require_once __DIR__ . '/../classes/VetRepository.php';
-require_once __DIR__ . '/authorize_admin.php'; // csak ha kell admin
+require_once __DIR__ . '/authorize_admin.php';
+require_once  __DIR__ . '/../core/init.php';
 
 use App\Vet;
 use App\VetRepository;
 
-$pdo = new PDO("mysql:host=localhost;dbname=hk_e_ny", "root", "");
 $vetRepo = new VetRepository($pdo);
 
 $method = $_SERVER['REQUEST_METHOD'];

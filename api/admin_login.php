@@ -4,7 +4,6 @@ header('Content-Type: application/json');
 
 require_once __DIR__ . '/../core/init.php';
 
-$pdo = new PDO("mysql:host=localhost;dbname=hk_e_ny", "root", "");
 // Read JSON body
 $data = json_decode(file_get_contents('php://input'), true);
 
