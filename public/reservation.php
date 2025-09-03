@@ -30,10 +30,8 @@
             <div class="col-lg-6 text-center text-lg-start">
                 <h1>Találja meg a tökéletes orvost kedvenceinek</h1>
                 <p class="my-4">
-                    Better high-touch digital model for maternity and improve digital engagement facility care is designed for convenient services.
+                    Minden kisállat megérdemli a legjobb ellátást és odafigyelést. Oldalunk segítségével gyorsan és egyszerűen megtalálhatod a megfelelő állatorvost vagy szakembert, aki gondoskodik kedvenced egészségéről és boldogságáról. Böngéssz a különböző lehetőségek között, válaszd ki a legmegfelelőbbet, és biztosítsd, hogy kis kedvenced mindig a legjobb kezekben legyen.
                 </p>
-                <button class="btn btn-primary me-3">Make Appointment</button>
-                <button class="btn btn-outline-dark">Watch Video</button>
             </div>
             <div class="col-lg-6 text-center">
                 <img src="images/doctor5.jpg" alt="Doctor">

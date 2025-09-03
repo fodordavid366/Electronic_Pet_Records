@@ -25,10 +25,11 @@
 <div class="container-fluid register-container mt-5">
     <div class="row g-4">
 
+<!--        MODIFICATION-->
         <div class="col-lg-4 col-md-5 col-12 d-flex align-items-start justify-content-center">
             <div class="w-100" style="max-width: 400px;">
                 <div class="card shadow-sm p-4">
-                    <h2 class="mb-4 text-center mb-5">Új orvos létrehozása</h2>
+                    <h2 class="mb-4 text-center mb-5">Profil módosítás</h2>
 
                     <form id="registerForm" action="#" method="post">
 
@@ -79,9 +80,9 @@
                 </div>
             </div>
         </div>
+
         <!-- PROFILES TABLE -->
-        <div class="row justify-content-center">
-            <div class="col-lg-8 col-12">
+        <div class="col-lg-8 col-md-7 col-12">
             <div class="card shadow-sm p-4">
                 <h4 class="mb-3 text-center">Felhasználók</h4>
                 <div class="table-responsive">

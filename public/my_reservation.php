@@ -42,7 +42,6 @@
                                         <th>Vizsgálat típusa</th>
                                         <th>Állapot</th>
                                         <td>Művelet</td>
-                                        <td></td>
                                     </tr>
                                     </thead>
                                     <tbody>
