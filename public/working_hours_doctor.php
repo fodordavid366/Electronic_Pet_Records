@@ -1,3 +1,15 @@
+<?php
+require_once __DIR__ . '/../core/init.php';
+require_once __DIR__ . '/../includes/dokiAuth.php';
+
+
+$user = checkDokiAuth();
+
+if (!$user) {
+    header("Location: doctor_login.php");
+    exit;
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,7 +31,8 @@
 </head>
 <body>
 
-<!-- LOGIN -->
+
+<?php include 'navigation_bar_doctor.php'; ?>
 <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
     <div class="card shadow-lg p-4" style="max-width: 550px; width: 100%; z-index: 1">
         <h5 class="text-center mb-4">Munkaidő</h5>
@@ -37,13 +50,13 @@
                         <label class="form-label">Hétfő</label>
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="monday_start" placeholder="Kezdés" required>
+                        <input type="time" class="form-control" name="monday_start" placeholder="Kezdés" >
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="monday_end" placeholder="Befejezés" required>
+                        <input type="time" class="form-control" name="monday_end" placeholder="Befejezés" >
                     </div>
                     <div class="col-12 col-md-2">
-                        <input type="number" class="form-control" name="monday_number" min="0" required>
+                        <input type="number" class="form-control" name="monday_number" min="0" >
                     </div>
                 </div>
 
@@ -52,13 +65,13 @@
                         <label class="form-label">Kedd</label>
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="tuesday_start" required>
+                        <input type="time" class="form-control" name="tuesday_start" >
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="tuesday_end" required>
+                        <input type="time" class="form-control" name="tuesday_end" >
                     </div>
                     <div class="col-12 col-md-2">
-                        <input type="number" class="form-control" name="tuesday_number" min="0" required>
+                        <input type="number" class="form-control" name="tuesday_number" min="0" >
                     </div>
                 </div>
 
@@ -67,13 +80,13 @@
                         <label class="form-label">Szerda</label>
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="wednesday_start" required>
+                        <input type="time" class="form-control" name="wednesday_start" >
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="wednesday_end" required>
+                        <input type="time" class="form-control" name="wednesday_end" >
                     </div>
                     <div class="col-12 col-md-2">
-                        <input type="number" class="form-control" name="wednesday_number" min="0" required>
+                        <input type="number" class="form-control" name="wednesday_number" min="0" >
                     </div>
                 </div>
 
@@ -82,13 +95,13 @@
                         <label class="form-label">Csütörtök</label>
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="thursday_start" required>
+                        <input type="time" class="form-control" name="thursday_start" >
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="thursday_end" required>
+                        <input type="time" class="form-control" name="thursday_end" >
                     </div>
                     <div class="col-12 col-md-2">
-                        <input type="number" class="form-control" name="thursday_number" min="0" required>
+                        <input type="number" class="form-control" name="thursday_number" min="0" >
                     </div>
                 </div>
 
@@ -97,13 +110,13 @@
                         <label class="form-label">Péntek</label>
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="friday_start" required>
+                        <input type="time" class="form-control" name="friday_start" >
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="friday_end" required>
+                        <input type="time" class="form-control" name="friday_end" >
                     </div>
                     <div class="col-12 col-md-2">
-                        <input type="number" class="form-control" name="friday_number" min="0" required>
+                        <input type="number" class="form-control" name="friday_number" min="0" >
                     </div>
                 </div>
 
@@ -112,13 +125,13 @@
                         <label class="form-label">Szombat</label>
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="saturday_start" required>
+                        <input type="time" class="form-control" name="saturday_start" >
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="saturday_end" required>
+                        <input type="time" class="form-control" name="saturday_end" >
                     </div>
                     <div class="col-12 col-md-2">
-                        <input type="number" class="form-control" name="saturday_number" min="0" required>
+                        <input type="number" class="form-control" name="saturday_number" min="0" >
                     </div>
                 </div>
 
@@ -127,13 +140,13 @@
                         <label class="form-label">Vasárnap</label>
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="sunday_start" required>
+                        <input type="time" class="form-control" name="sunday_start" >
                     </div>
                     <div class="col-12 col-md-3">
-                        <input type="time" class="form-control" name="sunday_end" required>
+                        <input type="time" class="form-control" name="sunday_end" >
                     </div>
                     <div class="col-12 col-md-2">
-                        <input type="number" class="form-control" name="sunday_number" min="0" required>
+                        <input type="number" class="form-control" name="sunday_number" min="0" >
                     </div>
                 </div>
 
@@ -161,8 +174,7 @@
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="javascript/js.js"></script>
-<script src="javascript/login.js"></script>
+<script src="javascript/vet_schedule.js"></script>
 
 </body>
 </html>
