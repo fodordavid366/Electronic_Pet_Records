@@ -110,7 +110,7 @@ JOIN pet p ON a.pet_id = p.pet_id
 JOIN vet v ON a.vet_id = v.vet_id
 JOIN treatment t ON a.treatment_id = t.treatment_id
 JOIN owner_pet op ON p.pet_id = op.pet_id
-WHERE op.owner_id = ?
+WHERE op.owner_id = ? ORDER BY a.starts_at DESC
 ");
             $stmt->execute([$user['sub']]);
             $appointments = $stmt->fetchAll();

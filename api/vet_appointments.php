@@ -18,7 +18,7 @@ switch ($method) {
             JOIN pet p ON a.pet_id = p.pet_id
             JOIN vet v ON a.vet_id = v.vet_id
             JOIN treatment t ON a.treatment_id = t.treatment_id
-            WHERE a.vet_id = ?");
+            WHERE a.vet_id = ? ORDER BY a.starts_at DESC");
         $stmt->execute([$user->sub]);
         $appointments = $stmt->fetchAll();
         echo json_encode($appointments);
