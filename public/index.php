@@ -63,13 +63,17 @@ try {
     <link rel="stylesheet" href="css/style.css?v=1">
     <link rel="stylesheet" href="css/reservation_css.css?v=1">
     <link rel="stylesheet" href="css/navigation_bar_css.css?v=1">
-
+<style>
+    .is-visible{
+        filter: drop-shadow(16px 7px 8px #3D405B);
+    }
+</style>
     <title>Kezdőoldal</title>
 </head>
 <body>
 
 
-    <div class="header">
+    <div class="header pt-5">
 <!--                Navbar-->
         <?php include 'navigation_bar.php'; ?>
 
@@ -86,22 +90,27 @@ try {
                         <span class="paw paw-d"></span>
                     </div>
 
-                    <div class="col-lg-6 col-12 mb-5 mb-lg-0 mt-5">
-                        <h1 class="cd-headline rotate-1 text-white mb-4 pb-2">
-                            <span>A kedvenc</span>
-                            <span class="cd-words-wrapper">
-                                    <b class="is-visible">Boldog</b>
-                                    <b>Egészséges</b>
-                                    <b>Szeretett</b>
-                                </span>
-                        </h1>
+                    <div class="container mt-5 position-relative">
+                        <div class="row align-items-center">
+                            <!-- Szöveg bal oldalon -->
+                            <div class="col-lg-6 col-12 mb-5 mb-lg-0 text-center text-lg-start pb-5">
+                                <h1 class="cd-headline rotate-1 text-white mb-4 pb-2">
+                                    <span>A kedvenc</span>
+                                    <span class="cd-words-wrapper">
+                    <b class="is-visible">Boldog</b>
+                    <b class="is-visible">Egészséges</b>
+                    <b class="is-visible">Szeretett</b>
+                </span>
+                                </h1>
+                                <h3 class="text-white">Találja meg a tökéletes gondoskodást kisállatának</h3>
+                            </div>
 
-                        <h2 class="text-white">Találja meg a tökéletes gondoskodást kisállatának</h2>
-                    </div>
-
-                    <div class="col-lg-6 col-12 mt-5">
-                        <div class="ratio" style="--bs-aspect-ratio: 60%;">
-                            <img src="images/doctor.png" class="d-block w-25 h-80 ms-5" alt="doctor">
+                            <div class="col-lg-6 col-12 text-center text-lg-end position-relative">
+                                <img src="images/doctor.png"
+                                     class="img-fluid rounded-circle shadow-lg"
+                                     style="max-width: 38%; top: 0; position: relative;"
+                                     alt="doctor">
+                            </div>
                         </div>
                     </div>
 
