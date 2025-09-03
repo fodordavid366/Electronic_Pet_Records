@@ -19,6 +19,15 @@ $data = json_decode(file_get_contents("php://input"), true);
 $email = $data['email'] ?? '';
 $password = $data['password'] ?? '';
 
+if (strlen($email) > 60) {
+    http_response_code(400);
+    echo json_encode(['message' => 'Érvénytelen e-mail cím']);
+}
+if (strlen($password) < 6) {
+    http_response_code(400);
+    echo json_encode(['message' => 'A jelszó túl rövid']);
+}
+
 $stmt = $pdo->prepare("SELECT * FROM vet WHERE email = ?");
 $stmt->execute([$email]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
