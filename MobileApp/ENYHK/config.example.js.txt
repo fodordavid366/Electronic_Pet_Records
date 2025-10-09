@@ -1,0 +1,2 @@
+// config.example.js
+export const API_BASE_URL = 'http://your_local_api_or_placeholder';

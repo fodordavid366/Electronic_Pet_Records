@@ -1,0 +1,15 @@
+# --- PHP / Weboldal ---
+/vendor/
+/.env
+/.idea
+/.vscode
+/.DS_Store
+*.log
+
+# --- MobileApp / React Native ---
+/MobileApp/ENYHK/node_modules/
+/MobileApp/ENYHK/.env
+/MobileApp/ENYHK/config.js
+/MobileApp/ENYHK/.idea
+/MobileApp/ENYHK/.vscode
+/MobileApp/ENYHK/.DS_Store
