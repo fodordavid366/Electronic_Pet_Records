@@ -30,8 +30,11 @@
                             Mancs
                             <small>Tár</small>
                         </span>
-
+            <li class="nav-item list-unstyled">
+                <a href="mobile_app.apk" download class="btn custom-btn custom-border-btn rounded-pill ms-lg-3 mt-2 mt-lg-0">Download app</a>
+            </li>
             <ul id="navbarLinks" class="navbar-nav ms-auto d-flex align-items-center">
+
                 <!-- Links will be injected here -->
             </ul>
 

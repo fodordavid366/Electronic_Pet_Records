@@ -1,2 +1,2 @@
 // config.js
-export const API_BASE_URL = 'http://192.168.0.5/ElektronikusNyilvantartasHaziKedvencekrol/api';
+export const API_BASE_URL = 'https://la.stud.vts.su.ac.rs/elektronikusNyilvantartasHaziKedvencekrol/api';

@@ -14,13 +14,19 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.yourcompany.yourapp",
+      "bundleIdentifier": "com.yourcompany.enyhk",
       "infoPlist": {
-        "UIBackgroundModes": ["remote-notification"]
+        "UIBackgroundModes": [
+          "remote-notification"
+        ]
       }
     },
     "android": {
-      "permissions": ["NOTIFICATIONS"],
+      "package": "com.yourcompany.enyhk",
+      "versionCode": 1,
+      "permissions": [
+        "NOTIFICATIONS"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -29,6 +35,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3b5ad008-4b31-434c-ab14-8a1581bfa070"
+      }
     }
   }
 }
